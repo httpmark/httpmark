@@ -23,7 +23,7 @@ app.use((err, req, rest, next) => {
 })
 
 app.listen(3000, () => {
-  console.log('App server listening on 3000')
+  console.log('WAHEY', app)
 });
 
 export default app;
