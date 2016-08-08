@@ -20,8 +20,7 @@ module.exports.default = {
       {
         test: /\.js?$/,
         exclude: /node_modules/,
-        loader: 'babel',
-        babelrc: false
+        loader: 'babel'
       }
     ]
   }

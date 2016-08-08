@@ -9,4 +9,4 @@ RUN npm i
 COPY . /app
 
 EXPOSE 3000
-CMD ./node_modules/.bin/nodemon
+CMD npm run dev:app-start

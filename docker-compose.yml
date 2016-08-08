@@ -6,19 +6,20 @@ server:
     - '3000'
   volumes:
     - .:/app
+    - /app/out
     - /app/node_modules
   environment:
     - BABEL_CACHE_PATH=/tmp/.babel.json
 
-webpack-hmr:
-  build: .
-  command: node server/dev/index.js
-  volumes:
-    - .:/app
-    - /app/node_modules
-  volumes_from:
-    - server:ro
-  expose:
-    - '3001'
-  ports:
-    - '3001:3001'
+#webpack-hmr-client:
+#  build: .
+#  command: node server/dev/index.js
+#  volumes:
+#    - .:/app
+#    - /app/node_modules
+#  volumes_from:
+#    - server:ro
+#  expose:
+#    - '3001'
+#  ports:
+#    - '3001:3001'
