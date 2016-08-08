@@ -4,7 +4,7 @@ import { renderToString } from 'react-dom/server';
 import routes from '../app/routes';
 import renderPage from './renderer';
 
-const app = express()
+const app = express();
 
 app.get('*', (req, res, next) => {
   match({ routes, location: req.url }, (err, redirectLocation, renderProps) => {
