@@ -10,7 +10,7 @@ module.exports.default = {
   output: {
     path: __dirname,
     filename: 'dist.js',
-    publicPath: '/static/'
+    publicPath: 'http://localhost:3001/'
   },
   plugins: [
     new webpack.HotModuleReplacementPlugin()
@@ -20,7 +20,10 @@ module.exports.default = {
       {
         test: /\.js?$/,
         exclude: /node_modules/,
-        loader: 'babel'
+        loader: 'babel',
+        query: {
+          presets: ['react-hmre']
+        }
       }
     ]
   }

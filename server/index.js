@@ -1,6 +1,5 @@
 import express from 'express';
 import { match } from 'react-router';
-import { renderToString } from 'react-dom/server';
 let routes = require('../app/routes').default;
 let renderPage = require('./renderer').default;
 
@@ -22,7 +21,7 @@ app.get('*', (req, res, next) => {
     } else if (redirectLocation) {
       return res.redirect(302, redirectLocation.pathname + redirectLocation.search);
     } else if (renderProps) {
-      return res.send(renderToString(renderPage(renderProps)));
+      return res.send(renderPage(renderProps));
     }
   });
 });
