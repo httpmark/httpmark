@@ -8,13 +8,13 @@ app:
     - .:/app
     - /app/out
     - /app/node_modules
-  command: node /app/out/bundle.js
+  command: node_modules/.bin/webpack "/app/node_modules/webpack/hot/poll?1000" --hot --watch --config webpack.dev.node.config.js
 
-webpack-hmr-node:
-  build: .
-  volumes_from:
-    - app
-  command: node_modules/.bin/webpack "/app/node_modules/webpack/hot/signal" --hot --watch --config webpack.dev.node.config.js
+#webpack-hmr-node:
+#  build: .
+#  volumes_from:
+#    - app
+#  command: node_modules/.bin/webpack "/app/node_modules/webpack/hot/signal" --hot --watch --config webpack.dev.node.config.js
 
 #webpack-hmr-client:
 #  build: .
