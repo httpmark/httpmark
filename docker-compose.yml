@@ -16,15 +16,12 @@ app:
 #    - app
 #  command: node_modules/.bin/webpack "/app/node_modules/webpack/hot/signal" --hot --watch --config webpack.dev.node.config.js
 
-#webpack-hmr-client:
-#  build: .
-#  command: node server/dev/index.js
-#  volumes:
-#    - .:/app
-#    - /app/node_modules
-#  volumes_from:
-#    - server:ro
-#  expose:
-#    - '3001'
-#  ports:
-#    - '3001:3001'
+webpack-hmr-client:
+ build: .
+ command: node server/dev/index.js
+ volumes_from:
+   - app:rw
+ expose:
+   - '3001'
+ ports:
+   - '3001:3001'
