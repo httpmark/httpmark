@@ -5,8 +5,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev:app-start": "webpack --debug --watch --config webpack.dev.node.config.js",
-    "dev:hmr-start": "node server/dev"
+    "dev:app-start": "rm -rf out && webpack \"webpack/hot/poll?1000\" --hot --watch --config webpack.dev.node.config.js",
+    "dev:hmr-start": "rm -rf out && node server/dev"
   },
   "author": "",
   "license": "ISC",

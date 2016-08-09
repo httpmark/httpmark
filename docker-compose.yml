@@ -1,4 +1,4 @@
-server:
+app:
   build: .
   ports:
     - '3000:3000'
@@ -8,8 +8,13 @@ server:
     - .:/app
     - /app/out
     - /app/node_modules
-  environment:
-    - BABEL_CACHE_PATH=/tmp/.babel.json
+  command: node /app/out/bundle.js
+
+webpack-hmr-node:
+  build: .
+  volumes_from:
+    - app
+  command: node_modules/.bin/webpack "/app/node_modules/webpack/hot/signal" --hot --watch --config webpack.dev.node.config.js
 
 #webpack-hmr-client:
 #  build: .
