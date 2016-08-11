@@ -6,6 +6,7 @@
   "main": "index.js",
   "scripts": {
     "lint": "eslint app server",
+    "flow": "flow; test $? -eq 0 -o $? -eq 2",
     "dev:app-start": "rm -rf out && webpack \"webpack/hot/poll?1000\" --hot --watch --config webpack.dev.node.config.js",
     "dev:hmr-start": "rm -rf out && node server/dev"
   },
@@ -28,6 +29,7 @@
     "eslint-config-airbnb": "^10.0.0",
     "eslint-plugin-import": "^1.12.0",
     "eslint-plugin-react": "^6.0.0",
+    "flow-bin": "^0.30.0",
     "nodemon": "^1.10.0",
     "pre-git": "^3.10.0",
     "supervisor": "^0.9.1",
@@ -41,7 +43,8 @@
   "config": {
     "pre-git": {
       "pre-commit": [
-        "npm run lint || { exit 1; }"
+        "npm run lint || { exit 1; }",
+        "npm run flow || { exit 1; }"
       ],
       "pre-push": [],
       "post-commit": [],
