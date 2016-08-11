@@ -1,8 +1,11 @@
 import express from 'express';
 import { match } from 'react-router';
+import saga from '../app/sagas';
 let routes = require('../app/routes').default;
 let renderPage = require('./renderer').default;
 let store = require('../app/store').default;
+
+store.sagaMiddleware.run(saga);
 
 const app = express();
 
@@ -25,10 +28,17 @@ app.get('*', (req, res, next) => {
     } else if (redirectLocation) {
       return res.redirect(302, redirectLocation.pathname + redirectLocation.search);
     } else if (renderProps) {
-      return res.send(renderPage(renderProps, store));
+      return res.send(renderPage(renderProps, store.store));
     }
   });
 });
+
+app.post('/spawn-agent', (req, res, next) => {
+  setTimeout(() => {
+    res.header('Content-Type', 'application/json');
+    res.send({ id: 'whatever' });
+  }, 2000)
+})
 
 app.use((err, req, rest, next) => {
   console.log(err)

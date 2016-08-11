@@ -3,6 +3,7 @@ const nodeExternals = require('webpack-node-externals');
 
 module.exports = {
   entry: [
+    "babel-polyfill",
     "./server/index.js"
   ],
   output: {
