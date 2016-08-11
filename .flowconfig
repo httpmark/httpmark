@@ -1,0 +1,6 @@
+[libs]
+interfaces/
+
+[ignore]
+.*/node_modules/fbjs/.*
+.*/node_modules/findup/test/.*

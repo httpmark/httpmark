@@ -1,3 +1,4 @@
+/* @flow */
 /* eslint-disable global-require */
 import express from 'express';
 import { match } from 'react-router';
@@ -6,7 +7,7 @@ let routes = require('../app/routes').default;
 let renderPage = require('./renderer').default;
 
 const app = express();
-const port = 3000;
+const port: number = 3000;
 
 if (module.hot) {
   module.hot.accept('../app/routes', () => {
