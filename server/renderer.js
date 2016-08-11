@@ -20,4 +20,4 @@ export default (props, store) => `
       <script src="http://localhost:3001/dist.js" async></script>
     </body>
   </html>
-`
+`;
