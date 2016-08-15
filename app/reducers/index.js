@@ -6,10 +6,11 @@ const agent = (state = false, action) => {
       return 'Agent Launched!';
     case 'AGENT_CONNECTED':
       return 'Agent Connected!';
+    default:
+      return state;
   }
-  return state
-}
+};
 
 export default combineReducers({
-  agent
-})
+  agent,
+});

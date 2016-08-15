@@ -3,9 +3,11 @@ import { renderToString } from 'react-dom/server';
 import { RouterContext } from 'react-router';
 import { Provider } from 'react-redux';
 
-const renderPageWithInitialState = (renderProps, store) => {
-  return renderToString(<Provider store={store}><RouterContext {...renderProps} /></Provider>)
-};
+const renderPageWithInitialState = (renderProps, store) => (
+  renderToString(
+    <Provider store={store}><RouterContext {...renderProps} /></Provider>
+  )
+);
 
 export default (props, store) => `
   <html>

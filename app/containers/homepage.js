@@ -15,11 +15,11 @@ class Homepage extends Component {
 }
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-  agentLaunched
+  agentLaunched,
 }, dispatch);
 
 const mapStateToProps = state => ({
-  agent: state.agent
-})
+  agent: state.agent,
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(Homepage);
