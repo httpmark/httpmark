@@ -7,6 +7,7 @@
   "scripts": {
     "lint": "eslint app server",
     "flow": "flow check",
+    "dev": "bash ./bin/setup.sh",
     "dev:app-start": "rm -rf out && webpack \"webpack/hot/poll?1000\" --hot --watch --config webpack.dev.node.config.js",
     "dev:hmr-start": "rm -rf out && node server/dev"
   },
