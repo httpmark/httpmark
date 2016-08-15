@@ -13,13 +13,20 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "babel-polyfill": "^6.13.0",
     "babel-preset-es2015": "^6.9.0",
     "babel-preset-react": "^6.11.1",
     "babel-preset-stage-0": "^6.5.0",
     "express": "^4.14.0",
+    "isomorphic-fetch": "^2.1.1",
+    "mori": "^0.3.2",
     "react": "^15.3.0",
     "react-dom": "^15.3.0",
-    "react-router": "^2.6.1"
+    "react-redux": "^4.4.5",
+    "react-router": "^2.6.1",
+    "redux": "^3.5.2",
+    "redux-mori": "^0.1.0",
+    "redux-saga": "^0.11.0"
   },
   "devDependencies": {
     "babel-eslint": "^6.1.2",
@@ -32,7 +39,6 @@
     "flow-bin": "^0.30.0",
     "nodemon": "^1.10.0",
     "pre-git": "^3.10.0",
-    "supervisor": "^0.9.1",
     "webpack": "^1.12.14",
     "webpack-dev-server": "^1.14.1",
     "webpack-node-externals": "^1.3.3"
