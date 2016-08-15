@@ -6,7 +6,7 @@
   "main": "index.js",
   "scripts": {
     "lint": "eslint app server",
-    "flow": "flow; test $? -eq 0 -o $? -eq 2",
+    "flow": "flow check",
     "dev:app-start": "rm -rf out && webpack \"webpack/hot/poll?1000\" --hot --watch --config webpack.dev.node.config.js",
     "dev:hmr-start": "rm -rf out && node server/dev"
   },
