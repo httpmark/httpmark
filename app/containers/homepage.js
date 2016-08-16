@@ -6,10 +6,11 @@ import { agentLaunched } from '../actions/agent';
 class Homepage extends Component {
   render() {
     return (
-      <div>
-        <button onClick={this.props.agentLaunched}>Launch agen</button>
+      <form onSubmit={this.props.agentLaunched}>
+        <input type="url" />
+        <button type="submit">Run test</button>
         {this.props.agent}
-      </div>
+      </form>
     );
   }
 }
