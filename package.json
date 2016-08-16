@@ -28,7 +28,8 @@
     "react-router": "^2.6.1",
     "redux": "^3.5.2",
     "redux-mori": "^0.1.0",
-    "redux-saga": "^0.11.0"
+    "redux-saga": "^0.11.0",
+    "ws": "^1.1.1"
   },
   "devDependencies": {
     "babel-eslint": "^6.1.2",
