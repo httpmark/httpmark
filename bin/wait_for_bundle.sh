@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 set -eu
+c=0
 
 has_bundle() {
   has_bundle=1
@@ -10,7 +11,7 @@ has_bundle() {
 
 while ! has_bundle
 do
-    echo "Waiting for webpack bundle to finish building..."
+    echo "Waiting for webpack bundle to finish building...";
     ((c++)) && ((c==10)) && break
     sleep 1
 done
@@ -19,8 +20,8 @@ if [ ! has_bundle ]; then
   echo "Bundle was not built within the time limit :(";
   exit 1;
 else
-  echo "Webpack bundle built successfully!"
+  echo "Webpack bundle built successfully!";
 fi;
 
-echo -e "\nStarting the application... press CTRL+C to exit the process"
+echo -e "\nStarting the application... press CTRL+C to exit the process";
 node out/bundle.js

@@ -2,8 +2,13 @@ app:
   build: .
   ports:
     - '3000:3000'
+    - '9000:9000'
   expose:
     - '3000'
+    - '9000'
+  environment:
+    - AWS_ACCESS_KEY_ID
+    - AWS_SECRET_ACCESS_KEY
   volumes:
     - .:/app
     - /app/out
