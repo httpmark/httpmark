@@ -8,14 +8,10 @@ For detailed information [check out the Wiki!](https://github.com/jameshopkins/w
 
 ### Running locally
 
-1. [Download and install Docker](https://docs.docker.com/engine/installation/)
-2. `$ cd webapptest`
-3. Run `$ docker-compose build` to build and tag the container.
-4. Run `$ docker-compose up` to start and attach the containers.
-5. Open a new terminal window and run `$ docker ps` to list all running containers.
-6. Copy the "CONTAINER ID" value for `webapptest_app`.
-7. Connect to the container by running `$ docker exec -it <CONTAINER ID> bash`.
-8. Once you are connected to the container, run `node out/bundle.js` to start the app.
+First you will need to [download and install Docker](https://docs.docker.com/engine/installation/).
 
-After running these steps you will be able to open the app in the browser on
-`http://localhost:<PORT>` where "<PORT>" is the value specified by the app's output
+Once Docker has installed, open a terminal window inside the `webapptest` directory and run `$ npm run dev`.
+
+When the script has finished running you should see a message in the terminal telling you where the app is running, (e.g. `localhost:3000`). The application is setup with hot module reloading on both the client and server, so any local changes should reflect in the browser immediately.
+
+_Note: Setup can take some time as it needs to install all project dependencies (queue elevator music...)_
