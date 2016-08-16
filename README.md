@@ -12,6 +12,6 @@ First you will need to [download and install Docker](https://docs.docker.com/eng
 
 Once Docker has installed, open a terminal window inside the `webapptest` directory and run `$ npm run dev`.
 
-When the script has finished running you should see a message in the terminal telling you where the app is running, (e.g. `localhost: 3000`). The application is setup with hot module reloading on both the client and server, so any local changes should reflect in the browser immediately.
+When the script has finished running you should see a message in the terminal telling you where the app is running, (e.g. `localhost:3000`). The application is setup with hot module reloading on both the client and server, so any local changes should reflect in the browser immediately.
 
 _Note: Setup can take some time as it needs to install all project dependencies (queue elevator music...)_
