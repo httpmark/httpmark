@@ -3,3 +3,9 @@ node_modules
 .config
 npm-debug.log
 out
+terraform.tfvars
+terraform.tfstate.backup
+.terraform
+tmp
+.env
+.envrc
