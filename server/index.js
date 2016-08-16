@@ -52,6 +52,8 @@ const lambdaClient = new Lambda({
 const app = express();
 const port: number = 3000;
 
+app.use(bodyParser.json())
+
 if (module.hot) {
   module.hot.accept('../app/routes', () => {
     routes = require('../app/routes').default;
@@ -76,7 +78,8 @@ app.get('*', (req, res, next) => {
   });
 });
 
-app.post('/spawn-agent', () => {
+app.post('/spawn-agent', (req, res) => {
+  console.log(res);
   lambdaClient.invoke({
     FunctionName: 'webapptest_agents',
     Payload: JSON.stringify({ url: 'some URL!!' }),

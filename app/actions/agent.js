@@ -1,7 +1,7 @@
 export const agentLaunched = (type, result) => ({
-  type: 'AGENT_LAUNCHED', result,
+  type: 'AGENT_LAUNCH_REQUEST_SENT', result,
 });
 
-export const agentConnected = (type, result) => ({
-  type: 'AGENT_CONNECTED', result,
+export const agentRegistered = (type, result) => ({
+  type: 'AGENT_LAUNCH_REQUEST_REGISTERED', result,
 });
