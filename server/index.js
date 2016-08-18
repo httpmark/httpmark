@@ -7,6 +7,7 @@ import express from 'express';
 import { Lambda } from 'aws-sdk';
 import { match } from 'react-router';
 import saga from '../app/sagas';
+import bodyParser from 'body-parser';
 
 let routes = require('../app/routes').default;
 let renderPage = require('./renderer').default;
@@ -16,13 +17,14 @@ const server = createServer();
 
 let hoistedWS;
 
-const wss = new WebSocketServer({ server, path: '/ws'});
+const wss = new WebSocketServer({ port: 3002 });
 wss.on('connection', ws => {
   hoistedWS = ws;
 });
 
 const tcpServer = net.createServer();
 tcpServer.on('connection', conn => {
+  console.log('nice');
   const remoteAddress = conn.remoteAddress + ':' + conn.remotePort;
   conn.setEncoding('utf8');
   conn.on('data', d => {
@@ -79,12 +81,11 @@ app.get('*', (req, res, next) => {
 });
 
 app.post('/spawn-agent', (req, res) => {
-  console.log(res);
   lambdaClient.invoke({
     FunctionName: 'webapptest_agents',
     Payload: JSON.stringify({ url: 'some URL!!' }),
   }, (err, data) => {
-    console.log(err, data);
+    res.sendStatus(200);
   });
 });
 
