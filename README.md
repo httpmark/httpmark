@@ -16,9 +16,16 @@ Ensure that these are installed first before continuing.
 
 1. Ensure that `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY` variables are set as environment variables on your host.
 2. Provision the AWS infrastructure though Terraform - `cd infrastructure && ./init.sh apply`.
- ### Build & Develop 
-Open a terminal window inside the `webapptest` directory and run `$ npm run dev`.
 
-When the script has finished running you should see a message in the terminal telling you where the app is running, (e.g. `localhost:3000`). The application is setup with hot module reloading on both the client and server, so any local changes should reflect in the browser immediately.
 
-_Note: Setup can take some time as it needs to install all project dependencies (queue elevator music...)_
+### Running
+
+1. `npm run dev:app-start`
+2. In another shell, `npm run dev:hmr-start`
+3. In another shell, `node out/bundle`
+
+#### Testing networking.
+
+1. Open up a publicly accessible TCP tunnel (`ngrok tcp 9000`), so that the now public TCP server can be passed to the test agent container in order to establish a socket connection. Save the host and port as two seperate environment variables - `TCP_HOST` and `TCP_PORT` respectively.
+
+You can test the setup by using `telnet` to pipe output into the TCP server at the other end.

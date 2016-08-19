@@ -9,7 +9,10 @@ import { agentTestRunStarted } from './actions/agent';
 store.sagaMiddleware.run(saga);
 
 const websocket = new WebSocket('ws://localhost:3002');
-websocket.onmessage = ({ data }) => store.store.dispatch(agentTestRunStarted(data));
+websocket.onmessage = ({ data }) => {
+  console.log(data);
+  store.store.dispatch(agentTestRunStarted(data))
+};
 
 if (module.hot) {
   module.hot.accept();

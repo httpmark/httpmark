@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 
 rm -rf ./tmp && mkdir ./tmp && mkdir ./tmp/agent_spawn_deploy
-cp ./agents/spawn/index.js ./tmp/agent_spawn_deploy
+cp ./agents/spawn/* ./tmp/agent_spawn_deploy
 cd ./tmp/agent_spawn_deploy
-zip ./agent_spawn.zip -r ./index.js
+zip ./agent_spawn.zip -r ./index.js ./tasks.sh
 cd ../..
 
 terraform remote config -backend=s3 \
