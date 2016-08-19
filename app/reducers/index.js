@@ -11,7 +11,6 @@ const agent = (state = [], { type, result }) => {
     case 'AGENT_LAUNCH_REQUEST_REGISTERED':
       return update([state.length - 1, 'status'], n => n.concat(['requestRegistered']), state);
     case 'AGENT_TEST_RUN_STARTED':
-      console.log('WAHEY!!!!');
       return update([state.length - 1, 'status'], n => n.concat(['agentConnected']), state);
     default:
       return state;

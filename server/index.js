@@ -15,20 +15,13 @@ let store = require('../app/store').default;
 
 const server = createServer();
 
-let hoistedWS;
-
 const wss = new WebSocketServer({ port: 3002 });
-wss.on('connection', ws => {
-  hoistedWS = ws;
-});
-
 const tcpServer = net.createServer();
+
 tcpServer.on('connection', conn => {
-  console.log('nice');
   const remoteAddress = conn.remoteAddress + ':' + conn.remotePort;
   conn.setEncoding('utf8');
   conn.on('data', d => {
-    hoistedWS.send(d);
     console.log('connection data from %s: %j', remoteAddress, d);
     conn.write(d);
   });
@@ -39,6 +32,7 @@ tcpServer.on('connection', conn => {
     console.log('Connection %s error: %s', remoteAddress, err.message);
   });
 });
+
 tcpServer.listen(9000, () => {
   console.log('server listening to %j', tcpServer.address());
 });
@@ -83,7 +77,11 @@ app.get('*', (req, res, next) => {
 app.post('/spawn-agent', (req, res) => {
   lambdaClient.invoke({
     FunctionName: 'webapptest_agents',
-    Payload: JSON.stringify({ url: 'some URL!!' }),
+    Payload: JSON.stringify({
+      url: 'some URL!!',
+      tcpHost: process.env.TCP_HOST,
+      tcpPort: process.env.TCP_PORT,
+    }),
   }, (err, data) => {
     res.sendStatus(200);
   });
