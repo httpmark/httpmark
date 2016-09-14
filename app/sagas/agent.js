@@ -2,15 +2,15 @@ import { takeEvery } from 'redux-saga';
 import { call, put } from 'redux-saga/effects';
 import { callAgent } from '../agents/api';
 
-function* spawnAgent() {
+function* spawnAgent({ result }) {
   try {
-    const user = yield call(callAgent);
-    yield put({ type: 'AGENT_CONNECTED' });
+    yield call(callAgent, result);
+    yield put({ type: 'AGENT_LAUNCH_REQUEST_REGISTERED' });
   } catch (e) {
     yield put({ type: 'AGENT_NOT_SPAWNED' });
   }
 }
 
 export default function* () {
-  yield* takeEvery('AGENT_LAUNCHED', spawnAgent);
+  yield* takeEvery('AGENT_LAUNCH_REQUEST_SENT', spawnAgent);
 }
