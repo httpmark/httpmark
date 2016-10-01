@@ -1,13 +1,13 @@
 [
   {
     "name": "test-agent-dev",
-    "image": "ubuntu",
+    "image": "${image}",
     "cpu": 500,
     "memory": 500,
     "essential": true,
     "command": [
-      "echo",
-      "This is now working"
+      "nodejs",
+      "index.js"
     ]
   }
 ]
