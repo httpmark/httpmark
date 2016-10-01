@@ -40,7 +40,17 @@ echo ECS_CLUSTER=test-agents-${var.environment} > /etc/ecs/ecs.config
 EOT
 }
 
+resource "template_file" "test_agent_task_definition" {
+  template = "${file("${path.module}/task-definition.json")}"
+
+  vars {
+    image = "${replace(aws_ecr_repository.default.repository_url, "https://", "")}:latest"
+    //port = "${var.app_tcp_port}"
+    //hostname = "${var.app_hostname}"
+  }
+}
+
 resource "aws_ecs_task_definition" "default" {
   family = "test-agent-${var.environment}"
-  container_definitions = "${file("${path.module}/task-definition.json")}"
+  container_definitions = "${template_file.test_agent_task_definition.rendered}"
 }
