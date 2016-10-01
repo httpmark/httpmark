@@ -1,0 +1,13 @@
+[
+  {
+    "name": "test-agent-dev",
+    "image": "ubuntu",
+    "cpu": 500,
+    "memory": 500,
+    "essential": true,
+    "command": [
+      "echo",
+      "This is now working"
+    ]
+  }
+]
