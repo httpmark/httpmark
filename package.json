@@ -43,24 +43,11 @@
     "eslint-plugin-react": "^6.0.0",
     "flow-bin": "^0.30.0",
     "nodemon": "^1.10.0",
-    "pre-git": "^3.10.0",
     "webpack": "^1.12.14",
     "webpack-dev-server": "^1.14.1",
     "webpack-node-externals": "^1.3.3"
   },
   "engines": {
     "node": "6.2.1"
-  },
-  "config": {
-    "pre-git": {
-      "pre-commit": [
-        "npm run lint || { exit 1; }",
-        "npm run flow || { exit 1; }"
-      ],
-      "pre-push": [],
-      "post-commit": [],
-      "post-checkout": [],
-      "post-merge": []
-    }
   }
 }
