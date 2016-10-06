@@ -8,8 +8,8 @@
     "lint": "eslint app server",
     "flow": "flow check",
     "dev": "bash ./bin/setup.sh",
-    "dev:app-start": "rm -rf out && webpack --hot --watch --config webpack.dev.node.config.js",
-    "dev:hmr-start": "node server/dev/index.js"
+    "dev:server-start": "rm -rf out && webpack --hot --watch --config webpack.dev.node.config.js",
+    "dev:browser-start": "node server/dev/index.js"
   },
   "author": "",
   "license": "ISC",
