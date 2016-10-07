@@ -5,13 +5,7 @@ import { Server as WebSocketServer } from 'ws';
 import net from 'net';
 import express from 'express';
 import { Lambda } from 'aws-sdk';
-import { match } from 'react-router';
-import saga from '../app/sagas';
 import bodyParser from 'body-parser';
-
-let routes = require('../app/routes').default;
-let renderPage = require('./renderer').default;
-let store = require('../app/store').default;
 
 const server = createServer();
 
@@ -37,8 +31,6 @@ tcpServer.listen(9000, () => {
   console.log('server listening to %j', tcpServer.address());
 });
 
-store.sagaMiddleware.run(saga);
-
 const lambdaClient = new Lambda({
   region: 'eu-west-1',
   accessKeyId: process.env.AWS_ACCESS_KEY_ID,
@@ -46,32 +38,12 @@ const lambdaClient = new Lambda({
 });
 
 const app = express();
-const port: number = 3000;
+const port = 3000;
 
 app.use(bodyParser.json())
 
-if (module.hot) {
-  module.hot.accept('../app/routes', () => {
-    routes = require('../app/routes').default;
-  });
-  module.hot.accept('./renderer', () => {
-    renderPage = require('./renderer').default;
-  });
-  module.hot.accept('../app/store', () => {
-    store = require('../app/store').default;
-  });
-}
-
-app.get('*', (req, res, next) => {
-  match({ routes, location: req.url }, (err, redirectLocation, renderProps) => {
-    if (err) {
-      next(err);
-    } else if (redirectLocation) {
-      res.redirect(302, redirectLocation.pathname + redirectLocation.search);
-    } else if (renderProps) {
-      res.send(renderPage(renderProps, store.store));
-    }
-  });
+app.get('/', (req, res, next) => {
+  res.send('Something will eventually be here')
 });
 
 app.post('/spawn-agent', (req, res) => {

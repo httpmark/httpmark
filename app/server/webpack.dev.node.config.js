@@ -3,9 +3,9 @@ const nodeExternals = require('webpack-node-externals');
 
 module.exports = {
   entry: [
-    "/Users/jameshopkins/Sites/webpagetest-2/node_modules/webpack/hot/poll?1000",
+    `${process.cwd()}/node_modules/webpack/hot/poll?1000`,
     "babel-polyfill",
-    "./server/index.js"
+    "./index.js"
   ],
   output: {
     path: "out",
