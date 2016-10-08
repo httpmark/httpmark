@@ -1,0 +1,1 @@
+"use strict";var loadTimes={start:window.performance.now()};window.addEventListener("load",function(){loadTimes.load=window.performance.now(),chrome.runtime.sendMessage(loadTimes,function(n){})}),window.addEventListener("DOMContentLoaded",function(){loadTimes.DOMContentLoaded=window.performance.now()});
