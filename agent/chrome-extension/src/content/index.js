@@ -1,12 +1,7 @@
-const loadTimes = {
-  start: window.performance.now()
-};
+const port = chrome.runtime.connect({ name: 'content' })
 
 window.addEventListener('load', () => {
-  loadTimes.load = window.performance.now()
-  chrome.runtime.sendMessage(loadTimes, response => {});
-});
-
-window.addEventListener('DOMContentLoaded', () => {
-    loadTimes.DOMContentLoaded = window.performance.now();
-});
+  if (window.location.href === 'http://www.lycos.com/') {
+    port.postMessage({ cmd: 'getHAR' });
+  }
+})

@@ -1,1 +1,0 @@
-"use strict";chrome.runtime.onMessage.addListener(function(t,n,e){t.DOMContentLoaded-t.start,t.load-t.start}),fetch("http://127.0.0.1:3001/task").then(function(t){t.json().then(function(t){chrome.tabs.update({url:t.url})})}).catch(function(t){return alert(t)});
