@@ -14,5 +14,10 @@
     "rimraf": "^2.5.4",
     "which": "^1.2.11",
     "xvfb": "^0.2.3"
+  },
+  "devDependencies": {
+    "babel-polyfill": "^6.16.0",
+    "rollup-plugin-commonjs": "^5.0.4",
+    "rollup-plugin-node-resolve": "^2.0.0"
   }
 }

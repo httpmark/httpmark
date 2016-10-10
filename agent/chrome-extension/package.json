@@ -16,6 +16,7 @@
     "chai": "^3.5.0",
     "glob": "^7.1.1",
     "mocha": "^3.1.0",
+    "ramda": "^0.22.1",
     "rollem": "^1.5.0",
     "rollup": "^0.36.1",
     "rollup-plugin-babel": "^2.6.1",
