@@ -13,6 +13,7 @@
     "express": "^4.14.0",
     "rimraf": "^2.5.4",
     "which": "^1.2.11",
+    "ws": "^1.1.1",
     "xvfb": "^0.2.3"
   },
   "devDependencies": {

@@ -17,6 +17,13 @@ module.exports = {
       loader: "babel"
     }]
   },
+  plugins:[
+    new webpack.optimize.UglifyJsPlugin({
+      compress: {
+        warnings: false
+      }
+    }),
+  ],
   output: {
     path: path.join(__dirname, 'build'),
     filename: "[name].js"
