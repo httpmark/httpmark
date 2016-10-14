@@ -1,0 +1,1 @@
+!function(e){function t(n){if(r[n])return r[n].exports;var o=r[n]={exports:{},id:n,loaded:!1};return e[n].call(o.exports,o,o.exports,t),o.loaded=!0,o.exports}var r={};return t.m=e,t.c=r,t.p="",t(0)}([function(e,t){"use strict";var r=chrome.runtime.connect({name:"content"});r.postMessage({cmd:"getHAR"})}]);
