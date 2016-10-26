@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
-  "name": "Getting started example",
-  "description": "This extension shows a Google Image search result for the current page",
+  "name": "WebAppTest Test Agent",
+  "description": "Responsible for managing the in-browser test orchestration and forwarding the subsequent metrics",
   "version": "0.1",
   "background": {
     "scripts": ["build/background.js"],
