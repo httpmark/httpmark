@@ -1,6 +1,6 @@
-const path = require('path');
-const glob = require("glob").sync;
-const webpack = require('webpack');
+import path from 'path';
+import { sync as glob } from 'glob';
+import webpack from 'webpack';
 
 const entryPoints = glob('src/**/index.js').reduce((prev, curr) => {
   const name = curr.split('/')[1];
@@ -8,7 +8,7 @@ const entryPoints = glob('src/**/index.js').reduce((prev, curr) => {
 }, {});
 
 
-module.exports = {
+export default {
   entry: entryPoints,
   module: {
     loaders: [{
@@ -17,7 +17,7 @@ module.exports = {
       loader: "babel"
     }]
   },
-  plugins:[
+  plugins: [
     new webpack.optimize.UglifyJsPlugin({
       compress: {
         warnings: false

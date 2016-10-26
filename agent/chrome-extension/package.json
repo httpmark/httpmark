@@ -6,7 +6,7 @@
   "main": "",
   "scripts": {
     "test": "mocha src/**/*.spec.js",
-    "compile": "webpack"
+    "compile": "babel-node ../node_modules/.bin/webpack"
   },
   "author": "",
   "license": "ISC",
