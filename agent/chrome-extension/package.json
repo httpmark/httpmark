@@ -1,7 +1,8 @@
 {
   "name": "webapptest-chrome-extension",
   "version": "0.0.1",
-  "description": "",
+  "private": true,
+  "description": "Chrome extension responsible for managing the in-browser test orchestration and forwarding the subsequent metrics",
   "main": "",
   "scripts": {
     "test": "NODE_ENV=test mocha src/**/*.spec.js",
