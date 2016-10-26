@@ -1,15 +1,16 @@
 import path from 'path';
 import { sync as glob } from 'glob';
 import webpack from 'webpack';
+import { compose, fromPairs, map, nth, split } from 'ramda';
 
-const entryPoints = glob('src/**/index.js').reduce((prev, curr) => {
-  const name = curr.split('/')[1];
-  return Object.assign({}, prev, { [name]: `./${curr}` });
-}, {});
-
+const processEntryPoints = compose(
+  fromPairs,
+  map(path => [ nth(1, split('/', path)), `./${path}` ]),
+  glob
+);
 
 export default {
-  entry: entryPoints,
+  entry: processEntryPoints('src/**/index.js'),
   module: {
     loaders: [{
       test: /\.js?$/,
