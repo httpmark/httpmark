@@ -28,8 +28,6 @@ npm t
 ```
 
 ### Building
-Compiled code is stored in `./build`. Additionally, since the extension is registered and run locally, its compiled contents have to be versioned.
-
 ```bash
 npm run compile -- --watch
 ```
