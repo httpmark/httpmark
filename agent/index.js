@@ -1,13 +1,13 @@
-const spawn = require('child_process').spawn;
-const express = require('express');
-const net = require('net');
-const Xvfb = require('xvfb');
-const os = require('os');
-const path = require('path');
-const rmraf = require('rimraf');
-const whichSync = require('which').sync;
-const bodyParser = require('body-parser');
-const WebSocketServer = require('ws').Server
+import { spawn } from 'child_process';
+import express from 'express';
+import net from 'net';
+import Xvfb from 'xvfb';
+import os from 'os';
+import path from 'path';
+import rimraf from 'rimraf';
+import { sync as whichSync } from 'which';
+import bodyParser from 'body-parser';
+import { Server as WebSocketServer } from 'ws';
 
 const wss = new WebSocketServer({ port: 3001 });
 

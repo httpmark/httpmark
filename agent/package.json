@@ -5,7 +5,8 @@
   "description": "The test agent for WebAppTest",
   "main": "index.js",
   "scripts": {
-    "test": "cd chrome-extension && npm t"
+    "test": "cd chrome-extension && npm t",
+    "compile": "babel-node $(npm bin)/webpack"
   },
   "author": "",
   "license": "ISC",
@@ -28,6 +29,7 @@
     "mocha": "^3.1.2",
     "ramda": "^0.22.1",
     "sinon": "^1.17.6",
-    "sinon-chai": "^2.8.0"
+    "sinon-chai": "^2.8.0",
+    "webpack-node-externals": "^1.5.4"
   }
 }
