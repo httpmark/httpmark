@@ -2,6 +2,7 @@
 node_modules
 .config
 npm-debug.log
+build
 out
 terraform.tfvars
 terraform.tfstate.backup
