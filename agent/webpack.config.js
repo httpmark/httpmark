@@ -3,7 +3,7 @@ import path from 'path';
 import webpack from 'webpack';
 
 export default {
-  entry: './index.js',
+  entry: './src/index.js',
   module: {
     loaders: [{
       test: /\.js?$/,
@@ -22,6 +22,6 @@ export default {
   ],
   output: {
     path: path.join(__dirname, 'build'),
-    filename: 'index.js'
+    filename: 'server.js'
   }
 }
