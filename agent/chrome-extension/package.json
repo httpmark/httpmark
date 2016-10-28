@@ -7,7 +7,7 @@
   "scripts": {
     "test": "mocha src/**/*.spec.js",
     "compile-scripts": "babel-node ../node_modules/.bin/webpack",
-    "build": "npm run compile-scripts && cp ./src/{devtools.html,manifest.json} ./build"
+    "build": "npm run compile-scripts && cp ./src/devtools.html ./build && cp ./src/manifest.json ./build"
   },
   "author": "",
   "license": "ISC",
