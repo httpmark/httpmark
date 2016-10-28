@@ -52,7 +52,7 @@ export const onConnectListener = (
       const { url } = await testPlan();
       tabs.update({ url }, () => {
         tabs.executeScript(tabId, {
-          file: 'build/content.js',
+          file: 'content.js',
           runAt: 'document_start'
         });
       });
