@@ -4,7 +4,7 @@
   "description": "Responsible for managing the in-browser test orchestration and forwarding the subsequent metrics",
   "version": "0.1",
   "background": {
-    "scripts": ["build/background.js"],
+    "scripts": ["background.js"],
     "persistent": false
   },
   "devtools_page": "devtools.html",

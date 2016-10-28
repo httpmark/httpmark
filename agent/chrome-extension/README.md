@@ -27,7 +27,13 @@ npm i
 npm t
 ```
 
-### Building
+## Building
+Compile `content script`, `background page`, and `devtools page` scripts.
 ```bash
-npm run compile -- --watch
+# Alias to Webpack so you can supply Webpack flags to it.
+npm run compile-scripts
+```
+Build the entire Chrome extension into a bundle. Used when building the Docker image.
+```bash
+npm run build
 ```
