@@ -92,7 +92,7 @@ describe('Event Page', () => {
           expect(tabUpdateSpy).to.have.been.calledWith({ url: 'some-url' });
           tabUpdateSpy.args[0][1]();
           expect(tabExeuteScriptSpy).to.have.been.calledWith(5, {
-            file: 'build/content.js',
+            file: 'content.js',
             runAt: 'document_start'
           });
         });
