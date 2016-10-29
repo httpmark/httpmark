@@ -30,12 +30,5 @@
    ```
 2. Run a container
    ```bash
-   docker run -it \
-   # This mount the host directory, so you don't need to rebuild the aforementioned image every time you change the app code.
-   -v $(pwd):/app \
-   # Your en0 interface
-   -e APP_HOSTNAME='192.168.0.5' \
-   # The app's TCP port (currently fixed to 9000 anyway)
-   -e APP_TCP_PORT='9000' \
-   IMAGE_ID
+   docker run -it -e TEST_ENDPOINT='http://www.example.com' $IMAGE_ID
    ```
