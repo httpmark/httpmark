@@ -6,6 +6,7 @@
   "main": "index.js",
   "scripts": {
     "lint": "eslint app server",
+    "build": "webpack --config webpack.node.config.js",
     "dev:server-start": "rm -rf out && webpack --hot --watch --config webpack.dev.node.config.js"
   },
   "author": "",
