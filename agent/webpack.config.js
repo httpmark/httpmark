@@ -3,7 +3,7 @@ import path from 'path';
 import webpack from 'webpack';
 
 export default {
-  entry: './src/index.js',
+  entry: './server/index.js',
   module: {
     loaders: [{
       test: /\.js?$/,
