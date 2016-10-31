@@ -32,6 +32,6 @@ terraform $type \
   -var "aws_secret_key=$AWS_SECRET_ACCESS_KEY" \
   -var "environment=$env"
 
-if [ $type = "apply" ]; then
+if [ $type != "plan" ]; then
   terraform remote push
 fi;
