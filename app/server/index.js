@@ -45,7 +45,7 @@ app.use(bodyParser.json());
 app.use(express.static('ui'));
 
 app.get('/', (req, res, next) => {
-  res.sendFile('ui/index.html', {root: __dirname });
+  res.sendFile('./ui/build/index.html', { root: process.cwd() });
 });
 
 app.get('/api', (req, res, next) => {
