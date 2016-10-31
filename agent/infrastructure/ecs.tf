@@ -45,6 +45,6 @@ resource "template_file" "test_agent_task_definition" {
 }
 
 resource "aws_ecs_task_definition" "default" {
-  family = "test-agent-${var.environment}"
+  family = "webapptest-test-agent-${var.environment}"
   container_definitions = "${template_file.test_agent_task_definition.rendered}"
 }
