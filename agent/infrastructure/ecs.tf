@@ -1,20 +1,20 @@
 resource "aws_ecs_cluster" "default" {
-  name = "test-agents-${var.environment}"
+  name = "webapptest-test-agents-${var.environment}"
 }
 
 resource "aws_iam_role" "ecs_role" {
-  name = "test-agents-${var.environment}-ecs"
+  name = "webapptest-test-agents-${var.environment}-ecs"
   assume_role_policy = "${file("${path.module}/policies/ecs-instance-role.json")}"
 }
 
 resource "aws_iam_instance_profile" "ecs" {
-  name = "test-agent-${var.environment}-ecs-instance-profile"
+  name = "webapptest-test-agent-${var.environment}-ecs-instance-profile"
   path = "/"
   roles = ["${aws_iam_role.ecs_role.name}"]
 }
 
 resource "aws_iam_role_policy" "ecs_role_policy" {
-  name = "test-agent-${var.environment}-ecs"
+  name = "webapptest-test-agent-${var.environment}-ecs"
   role = "${aws_iam_role.ecs_role.id}"
   policy = "${file("${path.module}/policies/ecs-instance-role-policy.json")}"
 }
