@@ -20,6 +20,7 @@ You must ensure the following environment variables are set.
 * `TERRAFORM_STATE_S3_BUCKET_NAME`: The name of the S3 bucket you've previously created.
 * `TERRAFORM_STATE_S3_BUCKET_KEY`: The path in the bucket in which Terraform should look for the remote state file
 * `AWS_REGION`: Use `eu-west-1` for the time being.
+* `PUBLIC_KEY_PATH`: The local path to the public key you wish to associate to the ECS Container Instance. E.g `~/.ssh/webapptest_rsa.pub`
 
 ```bash
 cd infrastructure
