@@ -1,6 +1,6 @@
 import HARBlob from './';
 
-describe.only('Creating a HAR blob', () => {
+describe('Creating a HAR blob', () => {
   it('renders a complete HAR-formatted structure', () => {
     const har = new HARBlob();
     const expected = {
