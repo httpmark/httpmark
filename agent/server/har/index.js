@@ -1,8 +1,7 @@
 export default class {
-  constructor(asset) {
-    this.assets = [];
-    this.timings = {};
-  }
+  assets = [];
+  timings = {}
+
   getBlob() {
     return {
       log: {
