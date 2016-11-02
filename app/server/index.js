@@ -40,10 +40,16 @@ const lambdaClient = new Lambda({
 const app = express();
 const port = 3000;
 
-app.use(bodyParser.json())
+app.use(bodyParser.json());
+
+app.use(express.static('ui'));
 
 app.get('/', (req, res, next) => {
-  res.send('Something will eventually be here')
+  res.sendFile('./ui/build/index.html', { root: process.cwd() });
+});
+
+app.get('/api', (req, res, next) => {
+  res.json(req.query);
 });
 
 app.post('/spawn-agent', (req, res) => {
