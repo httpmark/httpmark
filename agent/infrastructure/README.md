@@ -23,8 +23,6 @@ You must ensure the following environment variables are set.
 * `PUBLIC_KEY_PATH`: The local path to the public key you wish to associate to the ECS Container Instance. E.g `~/.ssh/webapptest_rsa.pub`
 
 ```bash
-cd infrastructure
-
 # View execution plan
 bin/infrastructure.sh -t plan -e $ENVIRONMENT
 
@@ -36,25 +34,4 @@ bin/infrastructure.sh -t apply -e $ENVIRONMENT # Where $ENVIRONMENT describes th
 
 Even though you'll now have all the necessary infrastructure provisioned, you'll still be unable to run the container from the AWS, since no Docker image will exist in the ECR registry.
 
-The following steps will walk you through how to do that.
-
-## Container Creation And Docker Image Building
-
-### Building the Docker image
-```bash
-docker build -t webapptest_test-agent .
-```
-
-### Running a container based off the image
-```bash
-docker run -it -e TEST_ENDPOINT='http://www.example.com' $IMAGE_ID
-
-# Where $IMAGE_ID is the ID of the Docker image you've just built.
-```
-
-Running the above command will return a real-time stream of asset loading to stdout from the headless Chrome instance inside the container. It's not very impressive right now, but it will be very soon!
-
-### Pushing The Docker Image To ECR
-```bash
-bin/deploy-image.sh
-```
+Follow the steps in /agent that will walk you through how to do that.
