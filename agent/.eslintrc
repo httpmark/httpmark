@@ -5,6 +5,13 @@
     "mocha": true,
     "shared-node-browser": true
   },
+  "globals": {
+    "fetch": false,
+    "WebSocket": false,
+    "chrome": false,
+    "expect": false,
+    "spy": false
+  },
   "rules": {
     "quotes": [2, "single"],
     "func-names": 0,
@@ -14,6 +21,8 @@
     "comma-dangle": [2, "never"],
     "no-new": 0,
     "radix": 0,
-    "import/no-extraneous-dependencies": 0
+    "import/no-extraneous-dependencies": 0,
+    "arrow-parens": [ 2, "as-needed", { "requireForBlockBody": false }],
+    "no-unused-expressions": 0
   }
 }
