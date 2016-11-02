@@ -10,7 +10,8 @@
     "test": "npm run test:server && npm run test:extension",
     "compile-scripts": "babel-node $(npm bin)/webpack",
     "build": "npm run compile-scripts && cd chrome-extension && npm run build",
-    "postbuild": "cp -r ./chrome-extension/build ./build/chrome-extension"
+    "postbuild": "cp -r ./chrome-extension/build ./build/chrome-extension",
+    "lint": "eslint --cache ."
   },
   "author": "",
   "license": "ISC",
@@ -26,6 +27,7 @@
   "devDependencies": {
     "babel-cli": "^6.18.0",
     "babel-core": "^6.18.0",
+    "babel-eslint": "^7.1.0",
     "babel-loader": "^6.2.5",
     "babel-plugin-transform-async-to-generator": "^6.16.0",
     "babel-plugin-transform-class-properties": "^6.18.0",
@@ -34,6 +36,9 @@
     "babel-plugin-transform-object-rest-spread": "^6.16.0",
     "babel-preset-es2015": "^6.18.0",
     "chai": "^3.5.0",
+    "eslint": "^3.9.1",
+    "eslint-config-airbnb": "^12.0.0",
+    "eslint-plugin-import": "^2.0.1",
     "glob": "^7.1.1",
     "mocha": "^3.1.2",
     "ramda": "^0.22.1",

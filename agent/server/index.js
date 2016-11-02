@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 import { spawn } from 'child_process';
 import express from 'express';
 import net from 'net';
