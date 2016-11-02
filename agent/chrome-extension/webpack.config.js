@@ -1,11 +1,11 @@
-import path from 'path';
+import { join } from 'path';
 import { sync as glob } from 'glob';
 import webpack from 'webpack';
 import { compose, fromPairs, map, nth, split } from 'ramda';
 
 const processEntryPoints = compose(
   fromPairs,
-  map(path => [ nth(1, split('/', path)), `./${path}` ]),
+  map(path => [nth(1, split('/', path)), `./${path}`]),
   glob
 );
 
@@ -15,7 +15,7 @@ export default {
     loaders: [{
       test: /\.js?$/,
       exclude: /node_modules/,
-      loader: "babel"
+      loader: 'babel'
     }]
   },
   plugins: [
@@ -23,10 +23,10 @@ export default {
       compress: {
         warnings: false
       }
-    }),
+    })
   ],
   output: {
-    path: path.join(__dirname, 'build'),
-    filename: "[name].js"
+    path: join(__dirname, 'build'),
+    filename: '[name].js'
   }
-}
+};

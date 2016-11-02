@@ -7,4 +7,4 @@ global.chrome = {
   tabs: {
     update() {}
   }
-}
+};

@@ -66,7 +66,7 @@ describe('Creating a HAR blob', () => {
       const result = har.addTiming({
         event: 'DOMContentReady',
         timing: 920293
-      })
+      });
       const expected = {
         log: {
           creator: {
@@ -81,8 +81,8 @@ describe('Creating a HAR blob', () => {
           },
           assets: []
         }
-      }
+      };
       expect(result).to.deep.equal(expected);
     });
-  })
+  });
 });
