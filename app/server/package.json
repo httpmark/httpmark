@@ -6,7 +6,9 @@
   "main": "index.js",
   "scripts": {
     "lint": "eslint app server",
-    "build": "webpack --config webpack.node.config.js",
+    "flow": "flow check",
+    "dev": "bash ./bin/setup.sh",
+    "build": "webpack",
     "dev:server-start": "rm -rf out && webpack --hot --watch --config webpack.dev.node.config.js"
   },
   "author": "",
