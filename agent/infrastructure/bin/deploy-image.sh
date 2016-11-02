@@ -3,7 +3,8 @@
 echo "Logging into ECR..."
 eval `aws ecr get-login`
 
-cd ../../../infrastructure
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )";
+cd $DIR/../../infrastructure
 
 ECR_TAG=`terraform output ecr_repository_url`
 LOCAL_TAG="webapptest_test_agent"
