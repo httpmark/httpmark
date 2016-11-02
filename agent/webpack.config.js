@@ -18,10 +18,10 @@ export default {
       compress: {
         warnings: false
       }
-    }),
+    })
   ],
   output: {
     path: path.join(__dirname, 'build'),
     filename: 'server.js'
   }
-}
+};

@@ -15,16 +15,16 @@ export default class {
         },
         assets: this.assets
       }
-    }
-  };
+    };
+  }
 
   addAsset(asset) {
     this.assets = [...this.assets, asset];
     return this.getBlob();
-  };
+  }
 
   addTiming({ event, timing }) {
-    this.timings = {...this.timings, [event]: timing};
+    this.timings = { ...this.timings, [event]: timing };
     return this.getBlob();
   }
 }
