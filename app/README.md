@@ -1,18 +1,21 @@
-# Front-end
+# Application
 
-The front-end is written with Elm, served by Express server.
+This application provides the GUI with which WebAppTest will be used.
 
-To build front-end:
+The [UI](ui) itself is written with Elm, served by an Express [server](server).
 
-```
-cd app
+To build the front-end:
+
+```bash
+$ pwd # "$APP_ROOT"/app
+
 make clean
 make build
 ```
 
-This will compile the elm front-end and start the node server. You can then access the app by visiting `http://localhost:3000`.
+This will remove previous bundle artifacts (`make clean`), and then compile the Elm UI and start the node server (`make build`). You can then access the app by visiting `http://localhost:3000`.
 
-## Developing front-end
+## Development
 
 To develop the server more easily, you can run:
 
@@ -20,7 +23,7 @@ To develop the server more easily, you can run:
 npm run dev:server-start
 ```
 
-This will start a watching webpack compilation for the server.
+This will enable Webpack HMR for asynchronous feedback.
 
 However, this won't automatically recompile the elm - that needs to be done manually for now.
 
