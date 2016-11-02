@@ -5,7 +5,6 @@
   "description": "Chrome extension responsible for managing the in-browser test orchestration and forwarding the subsequent metrics",
   "main": "",
   "scripts": {
-    "test": "../node_modules/.bin/mocha src/**/*.spec.js",
     "compile-scripts": "babel-node ../node_modules/.bin/webpack",
     "build": "npm run compile-scripts && cp ./src/devtools.html ./build && cp ./src/manifest.json ./build"
   },
