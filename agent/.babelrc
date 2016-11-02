@@ -1,4 +1,8 @@
 {
-  "plugins": [ "transform-async-to-generator" ],
+  "plugins": [
+    "transform-async-to-generator",
+    "transform-class-properties",
+    "transform-object-rest-spread"
+  ],
   "presets": [ "es2015" ]
 }
