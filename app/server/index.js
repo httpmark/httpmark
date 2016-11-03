@@ -43,17 +43,13 @@ const app = express();
 
 const port = 3000;
 
+app.set('view engine', 'pug');
+app.set('views', './');
 app.use(bodyParser.json());
 
 app.use(express.static('ui'));
 
-app.get('/', (_, res) => {
-  res.sendFile(
-    './ui/build/index.html', {
-      root: process.cwd()
-    }
-  );
-});
+app.get('*', (_, res) => res.render('index'));
 
 app.get('/api', (req, res) => {
   res.json(req.query);
