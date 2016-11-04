@@ -12,3 +12,4 @@ elm-stuff
 node_modules
 lib
 *.log
+.eslintcache
