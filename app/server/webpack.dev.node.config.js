@@ -8,8 +8,8 @@ module.exports = {
     "./index.js"
   ],
   output: {
-    path: "out",
-    filename: "bundle.js"
+    path: "lib",
+    filename: "server.dev.js"
   },
   externals: [nodeExternals()],
   target: "node",
