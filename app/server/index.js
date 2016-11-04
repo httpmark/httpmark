@@ -4,6 +4,7 @@ import express from 'express';
 import { Lambda } from 'aws-sdk';
 import bodyParser from 'body-parser';
 import debug from 'debug';
+import path from 'path';
 
 const log = (namespace, ...args) =>
   debug(`webapptest:${namespace}`)(...args);
@@ -44,12 +45,14 @@ const app = express();
 const port = 3000;
 
 app.set('view engine', 'pug');
-app.set('views', './');
+app.set('views', './server');
 app.use(bodyParser.json());
 
 app.use(express.static('ui'));
 
-app.get('*', (_, res) => res.render('index'));
+app.get('*', (_, res) => res.render('index', {
+  bundle: process.env.NODE_ENV === 'development' ? 'http://localhost:8080' : ''
+}));
 
 app.get('/api', (req, res) => {
   res.json(req.query);
