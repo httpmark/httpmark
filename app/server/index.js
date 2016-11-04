@@ -3,34 +3,34 @@ import net from 'net';
 import express from 'express';
 import { Lambda } from 'aws-sdk';
 import bodyParser from 'body-parser';
+import debug from 'debug';
 
-const log = (...args) =>
-  console.log(...args); // eslint-disable-line no-console
+const log = (namespace, ...args) =>
+  debug(`webapptest:${namespace}`)(...args);
 
 const server = createServer();
 const tcpServer = net.createServer();
 
 tcpServer.on('connection', conn => {
   const remoteAddress = `${conn.remoteAddress}:${conn.remotePort}`;
-
   conn.setEncoding('utf8');
 
   conn.on('data', d => {
-    log('connection data from %s: %j', remoteAddress, d);
+    log('tcp-server', 'connection data from %s: %j', remoteAddress, d);
     conn.write(d);
   });
 
   conn.once('close', () => {
-    log('connection from %s closed', remoteAddress);
+    log('tcp-server', 'connection from %s closed', remoteAddress);
   });
 
   conn.on('error', err => {
-    log('Connection %s error: %s', remoteAddress, err.message);
+    log('tcp-server', 'Connection %s error: %s', remoteAddress, err.message);
   });
 });
 
 tcpServer.listen(9000, () => {
-  log('server listening to %j', tcpServer.address());
+  log('tcp-server', 'server listening to %j', tcpServer.address());
 });
 
 const lambdaClient = new Lambda({
@@ -68,19 +68,19 @@ app.post('/spawn-agent', (req, res) => {
       tcpPort: process.env.TCP_PORT
     })
   }, (err) => {
-    log(err);
+    log('spawn-agent', err);
     res.sendStatus(200);
   });
 });
 
 app.use((err) => {
-  log(err);
+  log('server', err);
 });
 
 server.on('request', app);
 
 server.listen(port, () => {
-  log(`App server listening on port ${port}`);
+  log('server', `App server listening on port ${port}`);
 });
 
 export default app;
