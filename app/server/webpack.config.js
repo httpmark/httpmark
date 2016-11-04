@@ -7,7 +7,7 @@ module.exports = {
     "./index.js"
   ],
   output: {
-    path: "build",
+    path: "lib",
     filename: "server.js"
   },
   externals: [nodeExternals()],

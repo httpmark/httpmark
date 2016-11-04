@@ -9,3 +9,6 @@ tmp
 .env
 .envrc
 elm-stuff
+node_modules
+lib
+*.log
