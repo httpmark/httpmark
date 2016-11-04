@@ -26,6 +26,3 @@ npm run dev:server-start
 This will enable Webpack HMR for asynchronous feedback.
 
 However, this won't automatically recompile the elm - that needs to be done manually for now.
-
-*Note:* Might be better to use webpack-dev-server and elm loader for dev:
-https://github.com/rtfeldman/elm-webpack-loader
