@@ -4,7 +4,7 @@
   "version": "0.0.1",
   "description": "",
   "scripts": {
-    "dev": "webpack-dev-server --hot --inline",
+    "build:dev": "webpack-dev-server --hot --inline",
     "build": "webpack"
   },
   "devDependencies": {
