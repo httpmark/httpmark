@@ -7,8 +7,8 @@ module.exports = {
     './index.js'
   ],
   output: {
-    path: 'lib',
-    filename: 'server.dev.js'
+    path: 'build',
+    filename: 'server.js'
   },
   externals: [nodeExternals()],
   target: 'node',

@@ -10,7 +10,7 @@
   "scripts": {
     "lint": "eslint . --cache",
     "build": "webpack",
-    "dev": "rm -rf lib/*.dev.js && webpack --hot --watch --config webpack.dev.node.config.js"
+    "build:dev": "rm -rf build/*.js && webpack --hot --watch --config webpack.dev.node.config.js"
   },
   "author": "James Hopkins <jameshopkins0709@gmail.com>",
   "license": "MIT",
