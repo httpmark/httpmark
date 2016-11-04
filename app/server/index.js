@@ -44,6 +44,7 @@ const app = express();
 
 const port = 3000;
 
+app.use(express.static(path.join(process.cwd(), 'ui', 'build')));
 app.set('view engine', 'pug');
 app.set('views', './server');
 app.use(bodyParser.json());
