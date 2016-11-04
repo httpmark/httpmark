@@ -1,18 +1,17 @@
-const path = require("path");
 const nodeExternals = require('webpack-node-externals');
 
 module.exports = {
   entry: [
     `${process.cwd()}/node_modules/webpack/hot/poll?1000`,
-    "babel-polyfill",
-    "./index.js"
+    'babel-polyfill',
+    './index.js'
   ],
   output: {
-    path: "lib",
-    filename: "server.dev.js"
+    path: 'lib',
+    filename: 'server.dev.js'
   },
   externals: [nodeExternals()],
-  target: "node",
+  target: 'node',
   module: {
     loaders: [
       {

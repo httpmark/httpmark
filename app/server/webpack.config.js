@@ -1,17 +1,16 @@
-const path = require("path");
 const nodeExternals = require('webpack-node-externals');
 
 module.exports = {
   entry: [
-    "babel-polyfill",
-    "./index.js"
+    'babel-polyfill',
+    './index.js'
   ],
   output: {
-    path: "lib",
-    filename: "server.js"
+    path: 'lib',
+    filename: 'server.js'
   },
   externals: [nodeExternals()],
-  target: "node",
+  target: 'node',
   module: {
     loaders: [
       {
