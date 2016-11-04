@@ -27,7 +27,7 @@ module.exports = {
     noParse: /\.elm$/
   },
   plugins: [
-    new CleanWebpackPlugin(['lib'], {
+    new CleanWebpackPlugin(['build'], {
       root: __dirname,
       verbose: true,
       dry: false
