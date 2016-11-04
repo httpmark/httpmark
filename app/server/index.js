@@ -1,5 +1,3 @@
-/* @flow */
-/* eslint-disable global-require */
 import { createServer } from 'http';
 import { Server as WebSocketServer } from 'ws';
 import net from 'net';
