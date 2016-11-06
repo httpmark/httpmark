@@ -1,0 +1,11 @@
+{
+  "name": "webapptest-app",
+  "private": true,
+  "version": "0.0.1",
+  "description": "",
+  "scripts": {},
+  "devDependencies": {
+    "webpack": "^1.13.2"
+  },
+  "dependencies": {}
+}
