@@ -1,8 +1,8 @@
-const nodeExternals = require('webpack-node-externals');
+import nodeExternals from 'webpack-node-externals';
 
-module.exports = {
+export default {
   entry: [
-    `${process.cwd()}/node_modules/webpack/hot/poll?1000`,
+    `${process.cwd()}/../node_modules/webpack/hot/poll?1000`,
     'babel-polyfill',
     './index.js'
   ],
