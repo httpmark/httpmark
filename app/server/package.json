@@ -9,8 +9,9 @@
   },
   "scripts": {
     "lint": "eslint . --cache",
+    "prebuild": "yarn && rm -rf build",
     "build": "webpack",
-    "dev": "rm -rf lib/*.dev.js && webpack --hot --watch --config webpack.dev.node.config.js"
+    "build:dev": "npm run build -- --hot --watch --config webpack.dev.node.config.js"
   },
   "author": "James Hopkins <jameshopkins0709@gmail.com>",
   "license": "MIT",
@@ -21,6 +22,7 @@
     "express": "^4.14.0",
     "isomorphic-fetch": "^2.1.1",
     "lodash": "^4.15.0",
+    "pug": "^2.0.0-beta6",
     "ws": "^1.1.1"
   },
   "devDependencies": {
