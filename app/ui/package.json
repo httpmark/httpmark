@@ -4,8 +4,8 @@
   "version": "0.0.1",
   "description": "",
   "scripts": {
-    "build:dev": "webpack-dev-server --hot --inline",
-    "build": "webpack"
+    "build:dev": "yarn && webpack-dev-server --hot --inline",
+    "build": "yarn && webpack"
   },
   "devDependencies": {
     "clean-webpack-plugin": "^0.1.13",

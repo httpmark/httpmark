@@ -9,7 +9,7 @@
   },
   "scripts": {
     "lint": "eslint . --cache",
-    "prebuild": "rm -rf build",
+    "prebuild": "yarn && rm -rf build",
     "build": "webpack",
     "build:dev": "npm run build -- --hot --watch --config webpack.dev.node.config.js"
   },
