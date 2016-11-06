@@ -1410,16 +1410,6 @@ escope@^3.6.0:
     esrecurse "^4.1.0"
     estraverse "^4.1.1"
 
-eslint-config-airbnb-base@^5.0.2:
-  version "5.0.3"
-  resolved "https://registry.yarnpkg.com/eslint-config-airbnb-base/-/eslint-config-airbnb-base-5.0.3.tgz#9714ac35ec2cd7fab0d44d148a9f91db2944074d"
-
-eslint-config-airbnb@^10.0.0:
-  version "10.0.1"
-  resolved "https://registry.yarnpkg.com/eslint-config-airbnb/-/eslint-config-airbnb-10.0.1.tgz#a470108646d6c45e1f639a03f11d504a1aa4aedc"
-  dependencies:
-    eslint-config-airbnb-base "^5.0.2"
-
 eslint-import-resolver-node@^0.2.0:
   version "0.2.3"
   resolved "https://registry.yarnpkg.com/eslint-import-resolver-node/-/eslint-import-resolver-node-0.2.3.tgz#5add8106e8c928db2cba232bcd9efa846e3da16c"
@@ -1427,6 +1417,10 @@ eslint-import-resolver-node@^0.2.0:
     debug "^2.2.0"
     object-assign "^4.0.1"
     resolve "^1.1.6"
+
+eslint-plugin-babel@^3.3.0:
+  version "3.3.0"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-babel/-/eslint-plugin-babel-3.3.0.tgz#2f494aedcf6f4aa4e75b9155980837bc1fbde193"
 
 eslint-plugin-import@^1.12.0:
   version "1.16.0"
@@ -1449,7 +1443,7 @@ eslint-plugin-import@^1.12.0:
     pkg-dir "^1.0.0"
     pkg-up "^1.0.0"
 
-eslint@^3.2.2:
+eslint@^3.9.1:
   version "3.9.1"
   resolved "https://registry.yarnpkg.com/eslint/-/eslint-3.9.1.tgz#5a8597706fc6048bc6061ac754d4a211d28f4f5b"
   dependencies:
