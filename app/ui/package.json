@@ -6,8 +6,8 @@
   "scripts": {
     "prebuild": "yarn",
     "prebuild:dev": "npm run prebuild",
-    "build:dev": "webpack-dev-server --hot --inline",
-    "build": "webpack"
+    "build:dev": "babel-node $(npm bin)/webpack-dev-server --hot --inline",
+    "build": "babel-node ../node_modules/.bin/webpack"
   },
   "devDependencies": {
     "clean-webpack-plugin": "^0.1.13",

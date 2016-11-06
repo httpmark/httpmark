@@ -10,7 +10,7 @@
   "scripts": {
     "lint": "eslint . --cache",
     "prebuild": "yarn && rm -rf build",
-    "build": "webpack",
+    "build": "babel-node ../node_modules/.bin/webpack",
     "build:dev": "npm run build -- --hot --watch --config webpack.dev.node.config.js"
   },
   "author": "James Hopkins <jameshopkins0709@gmail.com>",

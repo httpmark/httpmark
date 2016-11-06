@@ -1,2 +1,2 @@
-const Elm = require('./Main');
-Elm.Main.embed(document.getElementById('app'));
+import { Main } from './Main';
+Main.embed(document.getElementById('app'));

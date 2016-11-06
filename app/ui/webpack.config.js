@@ -1,6 +1,6 @@
-const CleanWebpackPlugin = require('clean-webpack-plugin');
+import CleanWebpackPlugin from 'clean-webpack-plugin';
 
-module.exports = {
+export default {
   entry: './src/index.js',
   output: {
     path: './build',
@@ -13,6 +13,11 @@ module.exports = {
   },
   module: {
     loaders: [
+      {
+        test: /\.js?$/,
+        exclude: /node_modules/,
+        loader: 'babel'
+      },
       {
         test: /\.html$/,
         exclude: /node_modules/,
