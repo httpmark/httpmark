@@ -1,20 +1,23 @@
 SHELL:=/bin/bash
 
-clean: ## Removes all build files
-	rm -rf server/build
-	rm -rf ui/build
-
-build: ui/build/index.html server/build/server.js ## Build front-end
+run: build-ui build-server
 	node server/build/server.js
 
-ui/build/index.html:
+build-ui:
 	cd ./ui; \
-	elm-make Index.elm --output=./build/index.html
+	npm run build
 
-server/build/server.js:
+build-server:
 	cd ./server; \
 	npm run build
 
+dev-build-ui:
+	cd ./ui; \
+	npm run build:dev
+
+dev-build-server:
+	cd ./server; \
+	npm run build:dev
+
 .PHONY: \
-	build \
-	clean
+	run \
