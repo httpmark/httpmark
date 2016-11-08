@@ -9,6 +9,6 @@
     "build": "npm run compile-scripts && cp ./src/devtools.html ./build && cp ./src/manifest.json ./build"
   },
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "devDependencies": {}
 }
