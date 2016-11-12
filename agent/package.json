@@ -6,7 +6,7 @@
   "main": "index.js",
   "scripts": {
     "test:server": "mocha server/**/*.spec.js",
-    "test:extension": "mocha chrome-extension/**/*.spec.js --require chrome-extension/test/helpers",
+    "test:extension": "mocha chrome-extension/**/*.spec.js --require chrome-extension/test-helper",
     "test": "npm run test:server && npm run test:extension",
     "compile-scripts": "babel-node $(npm bin)/webpack",
     "build": "npm run compile-scripts && cd chrome-extension && npm run build",
