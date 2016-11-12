@@ -10,6 +10,7 @@
     "test": "npm run test:server && npm run test:extension",
     "compile-scripts": "babel-node $(npm bin)/webpack",
     "build": "npm run compile-scripts && cd chrome-extension && npm run build",
+    "prebuild": "npm t",
     "postbuild": "cp -r ./chrome-extension/build ./build/chrome-extension",
     "lint": "eslint --cache ."
   },
