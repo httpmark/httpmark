@@ -6,10 +6,11 @@ import bodyParser from 'body-parser';
 import debug from 'debug';
 import path from 'path';
 
+const PORT = 3000;
+
 const log = (namespace, ...args) =>
   debug(`webapptest:${namespace}`)(...args);
 
-const server = createServer();
 const tcpServer = net.createServer();
 
 tcpServer.on('connection', conn => {
@@ -40,9 +41,8 @@ const lambdaClient = new Lambda({
   secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY
 });
 
-const app = express();
 
-const port = 3000;
+const app = express();
 
 app.use(express.static(path.join(process.cwd(), 'ui', 'build')));
 app.set('view engine', 'pug');
@@ -51,12 +51,18 @@ app.use(bodyParser.json());
 
 app.use(express.static('ui'));
 
-app.get('*', (_, res) => res.render('index', {
-  bundle: process.env.NODE_ENV === 'development' ? 'http://localhost:8080' : ''
-}));
+app.get('/', (_, res) => {
+  log('server', 'GET /');
+  res.render('index', {
+    bundle: process.env.NODE_ENV === 'development' ? 'http://localhost:8080' : ''
+  });
+});
 
 app.get('/api', (req, res) => {
-  res.json(req.query);
+  log('server', 'GET /api', JSON.stringify(req.query));
+  setTimeout(() => {
+    res.json(req.query);
+  }, 100);
 });
 
 app.post('/spawn-agent', (req, res) => {
@@ -74,13 +80,13 @@ app.post('/spawn-agent', (req, res) => {
 });
 
 app.use((err) => {
-  log('server', err);
+  log('server-error', err);
 });
 
-server.on('request', app);
-
-server.listen(port, () => {
-  log('server', `App server listening on port ${port}`);
+const httpServer = createServer();
+httpServer.on('request', app);
+httpServer.listen(PORT, () => {
+  log('server', `App server listening on port ${PORT}`);
 });
 
 export default app;

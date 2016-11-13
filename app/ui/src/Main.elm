@@ -1,64 +1,73 @@
-import Html exposing (div, button, text, input)
+import Html exposing (..)
 import Html.App as App
+import Html.Attributes exposing (..)
 import Html.Events exposing (onClick, onInput)
-import Task
+import Task exposing (Task)
 import Http
 import Json.Decode as Json
 
-
 main =
-  App.program { init = model, view = view, update = update, subscriptions = subscriptions }
+  App.program
+    { init = init
+    , view = view
+    , update = update
+    , subscriptions = (always Sub.none)
+    }
+
+-- Model
 
 type alias Model =
-  { text : String
-  , finalText : String
+  { query : String
+  , output : String
   }
 
-model : (Model, Cmd a)
-model =
+init : (Model, Cmd a)
+init =
   (Model "" "", Cmd.none)
 
+-- Update
 
-view model =
-  div []
-    [ input [ onInput UpdateText ] []
-    , button [ onClick GetMoreData ] [ text "Update" ]
-    , div [] [ text (toString model.finalText) ]
-    ]
+fetchCmd : String -> Cmd Msg
+fetchCmd url =
+  let
+    data : String -> Task Http.Error String
+    data url =
+      Http.get decode ("http://localhost:3000/api?url=" ++ url)
+  in
+    Task.perform FetchError FetchSuccess (data url)
 
+decode : Json.Decoder String
+decode =
+  Json.at ["url"] Json.string
 
-type Msg = UpdateText String | UpdateFinalText String | GetMoreData | GetDataFail Http.Error
+type Msg
+  = ChangeQuery String
+  | Fetch
+  | FetchSuccess String
+  | FetchError Http.Error
 
 update : Msg -> Model -> (Model, Cmd Msg)
 update msg model =
   case msg of
-    UpdateText text ->
-      ({ model | text = text }, Cmd.none)
+    ChangeQuery text ->
+      ({ model | query = text }, Cmd.none)
 
-    UpdateFinalText finalText ->
-      ({ model | finalText = finalText }, Cmd.none)
+    Fetch ->
+      ({ model | output = "Fetching..." }, fetchCmd model.query)
 
-    GetMoreData ->
-      (model, getData model.text)
+    FetchSuccess output ->
+      ({ model | output = "Server responded: " ++ output }, Cmd.none)
 
-    GetDataFail error ->
-      ({ model | finalText = (toString error) }, Cmd.none)
-
-
-getData : String -> Cmd Msg
-getData url =
-  let
-    url =
-      "http://localhost:3000/api?url=" ++ url
-  in
-    Task.perform GetDataFail UpdateFinalText (Http.get decodeResponse url)
+    FetchError error ->
+      ({ model | output = (toString error) }, Cmd.none)
 
 
-subscriptions : Model -> Sub Msg
-subscriptions model =
-  Sub.none
+-- View
 
-
-decodeResponse : Json.Decoder String
-decodeResponse =
-  Json.at ["url"] Json.string
+view : Model -> Html Msg
+view model =
+  div []
+    [ input [ onInput ChangeQuery ] []
+    , button [ onClick Fetch ] [ text "Update" ]
+    , p [] [ text (toString model.output) ]
+    ]
