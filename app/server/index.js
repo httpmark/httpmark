@@ -104,9 +104,10 @@ webSocketServer.on('connection', (ws) => {
 
     repeatedly(5, 1000, (i, timeout) => {
       ticker = timeout;
-      const message = new Array(i + 1).fill(msg).join(' ');
+      const messages = new Array(i + 1).fill(msg);
+      const payload = { messages };
 
-      ws.send(message);
+      ws.send(JSON.stringify(payload));
     });
   });
 });

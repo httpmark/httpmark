@@ -3,6 +3,7 @@ import Html.App as App
 import Html.Attributes exposing (..)
 import Html.Events exposing (onClick, onInput)
 import WebSocket
+import Json.Decode as Decode
 
 webSocketUrl = "ws://localhost:3000/stream"
 
@@ -16,20 +17,32 @@ main =
 
 -- Model
 
+type Output
+  = ServerMessages (List String)
+  | Message String
+
 type alias Model =
   { query : String
-  , output : String
+  , output : Output
   }
 
 init : (Model, Cmd a)
 init =
-  (Model "" "", Cmd.none)
+  (Model "" (Message ""), Cmd.none)
 
 -- Update
 
 sendCmd : String -> Cmd Msg
 sendCmd input =
   WebSocket.send webSocketUrl input
+
+decodeMessage : String -> Result String (List String)
+decodeMessage message =
+  let
+    messageDecoder =
+      Decode.at ["messages"] (Decode.list Decode.string)
+  in
+    Decode.decodeString messageDecoder message
 
 type Msg
   = ChangeQuery String
@@ -43,10 +56,15 @@ update msg {query, output} =
       (Model text output, Cmd.none)
 
     Fetch ->
-      (Model query "Awaiting response...", sendCmd query)
+      (Model query (Message "Awaiting response..."), sendCmd query)
 
     Receive text ->
-      (Model query ("Server sent: " ++ text), Cmd.none)
+      case decodeMessage text of
+        Err err ->
+          (Model query (Message err), Cmd.none)
+
+        Ok msgs ->
+          (Model query (ServerMessages msgs), Cmd.none)
 
 -- subscriptions
 
@@ -61,5 +79,14 @@ view model =
   div []
     [ input [ onInput ChangeQuery ] []
     , button [ onClick Fetch ] [ text "Update" ]
-    , p [] [ text (toString model.output) ]
+    , messages model.output
     ]
+
+messages : Output -> Html Msg
+messages output =
+  case output of
+    Message message ->
+      p [] [ text message ]
+
+    ServerMessages messages ->
+      ul [] (List.map (\l -> li [] [ text l ]) messages)
