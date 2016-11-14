@@ -8,7 +8,7 @@ To build the application, and run it:
 
 ```bash
 $ pwd # "$APP_ROOT"/app
-make build
+make run
 ```
 You can then access the app at `http://localhost:3000`.
 
