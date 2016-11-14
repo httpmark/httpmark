@@ -1,5 +1,6 @@
 import { createServer } from 'http';
 import net from 'net';
+import { Server } from 'ws';
 import express from 'express';
 import { Lambda } from 'aws-sdk';
 import bodyParser from 'body-parser';
@@ -79,11 +80,44 @@ app.post('/spawn-agent', (req, res) => {
   });
 });
 
-app.use((err) => {
-  log('server-error', err);
+const httpServer = createServer();
+const webSocketServer = new Server({
+  path: '/stream',
+  server: httpServer
 });
 
-const httpServer = createServer();
+const repeatedly = (count, delay, fn) => {
+  const tick = (n) => () => {
+    if (n < 1) {
+      return;
+    }
+
+    const timeout = setTimeout(tick(n - 1), delay);
+    fn(count - n, timeout);
+  };
+
+  setTimeout(tick(count), delay);
+};
+
+webSocketServer.on('connection', (ws) => {
+  let ticker;
+
+  log('websocket-server', 'received a new connection');
+
+  ws.on('message', (msg) => {
+    log('websocket-server', `received ${msg}`);
+    // cancel previous ticker
+    clearTimeout(ticker);
+
+    repeatedly(5, 1000, (i, timeout) => {
+      ticker = timeout;
+      const message = new Array(i + 1).fill(msg).join(' ');
+
+      ws.send(message);
+    });
+  });
+});
+
 httpServer.on('request', app);
 httpServer.listen(PORT, () => {
   log('server', `App server listening on port ${PORT}`);

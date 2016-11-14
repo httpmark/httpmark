@@ -2,16 +2,16 @@ import Html exposing (..)
 import Html.App as App
 import Html.Attributes exposing (..)
 import Html.Events exposing (onClick, onInput)
-import Task exposing (Task)
-import Http
-import Json.Decode as Json
+import WebSocket
+
+webSocketUrl = "ws://localhost:3000/stream"
 
 main =
   App.program
     { init = init
     , view = view
     , update = update
-    , subscriptions = (always Sub.none)
+    , subscriptions = subscriptions
     }
 
 -- Model
@@ -27,40 +27,32 @@ init =
 
 -- Update
 
-fetchCmd : String -> Cmd Msg
-fetchCmd url =
-  let
-    data : String -> Task Http.Error String
-    data url =
-      Http.get decode ("http://localhost:3000/api?url=" ++ url)
-  in
-    Task.perform FetchError FetchSuccess (data url)
-
-decode : Json.Decoder String
-decode =
-  Json.at ["url"] Json.string
+sendCmd : String -> Cmd Msg
+sendCmd input =
+  WebSocket.send webSocketUrl input
 
 type Msg
   = ChangeQuery String
   | Fetch
-  | FetchSuccess String
-  | FetchError Http.Error
+  | Receive String
 
 update : Msg -> Model -> (Model, Cmd Msg)
-update msg model =
+update msg {query, output} =
   case msg of
     ChangeQuery text ->
-      ({ model | query = text }, Cmd.none)
+      (Model text output, Cmd.none)
 
     Fetch ->
-      ({ model | output = "Fetching..." }, fetchCmd model.query)
+      (Model query "Awaiting response...", sendCmd query)
 
-    FetchSuccess output ->
-      ({ model | output = "Server responded: " ++ output }, Cmd.none)
+    Receive text ->
+      (Model query ("Server sent: " ++ text), Cmd.none)
 
-    FetchError error ->
-      ({ model | output = (toString error) }, Cmd.none)
+-- subscriptions
 
+subscriptions : Model -> Sub Msg
+subscriptions model =
+  WebSocket.listen webSocketUrl Receive
 
 -- View
 
