@@ -59,13 +59,6 @@ app.get('/', (_, res) => {
   });
 });
 
-app.get('/api', (req, res) => {
-  log('server', 'GET /api', JSON.stringify(req.query));
-  setTimeout(() => {
-    res.json(req.query);
-  }, 100);
-});
-
 app.post('/spawn-agent', (req, res) => {
   lambdaClient.invoke({
     FunctionName: 'webapptest_agents',
