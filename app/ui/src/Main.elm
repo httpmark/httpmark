@@ -22,21 +22,21 @@ init =
 
 
 update : Message -> Model -> ( Model, Cmd Message )
-update msg { query, output } =
+update msg model =
     case msg of
         ChangeQuery text ->
-            ( Model text output, Cmd.none )
+            ( { model | query = text }, Cmd.none )
 
         Fetch ->
-            ( Model query (Model.Single "Awaiting response..."), API.send query )
+            ( { model | output = Model.Single "Awaiting response..." }, API.send model.query )
 
         Receive json ->
             case Model.fromJson json of
                 Err err ->
-                    ( Model query (Model.Single err), Cmd.none )
+                    ( { model | output = Model.Single err }, Cmd.none )
 
                 Ok msgs ->
-                    ( Model query (Model.Multiple msgs), Cmd.none )
+                    ( { model | output = Model.Multiple msgs }, Cmd.none )
 
 
 subscriptions : Model -> Sub Message
