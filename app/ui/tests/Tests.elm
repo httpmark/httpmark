@@ -6,6 +6,6 @@ import ModelTest
 
 all : Test
 all =
-    describe "Sample Test Suite"
+    describe "Web App Test UI"
         [ ModelTest.all
         ]
