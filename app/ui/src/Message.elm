@@ -1,6 +1,7 @@
 module Message exposing (..)
 
+
 type Message
-  = ChangeQuery String
-  | Fetch
-  | Receive String
+    = ChangeQuery String
+    | Fetch
+    | Receive String
