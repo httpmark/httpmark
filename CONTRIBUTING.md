@@ -2,7 +2,7 @@
 
 We welcome contributions of any kind.
 
-To get started, look at the development setup guidelines for both [app](app#development) and [agent](agent#container-creation-and-docker-image-building)
+To get started, look at the development setup guidelines for both [app](app/CONTRIBUTING.md) and [agent](agent#container-creation-and-docker-image-building)
 
 ## Pull Requests
 
