@@ -1,6 +1,6 @@
 import { createServer } from 'http';
 import net from 'net';
-import { Server } from 'ws';
+import WebSocket, { Server } from 'ws';
 import express from 'express';
 import { Lambda } from 'aws-sdk';
 import bodyParser from 'body-parser';
@@ -107,7 +107,9 @@ webSocketServer.on('connection', (ws) => {
       const messages = new Array(i + 1).fill(msg);
       const payload = { messages };
 
-      ws.send(JSON.stringify(payload));
+      if (ws.readyState === WebSocket.OPEN) {
+        ws.send(JSON.stringify(payload));
+      }
     });
   });
 });
