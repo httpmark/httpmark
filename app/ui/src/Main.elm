@@ -1,7 +1,6 @@
 module Main exposing (..)
 
 import Html
-import Html.App as App
 import Server as API
 import Model exposing (Model, Output(..))
 import Message exposing (Message(..))
@@ -9,7 +8,7 @@ import Components as UI
 
 
 main =
-    App.program
+    Html.program
         { init = init
         , update = update
         , subscriptions = subscriptions
