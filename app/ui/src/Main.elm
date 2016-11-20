@@ -1,92 +1,49 @@
-import Html exposing (..)
-import Html.App as App
-import Html.Attributes exposing (..)
-import Html.Events exposing (onClick, onInput)
-import WebSocket
-import Json.Decode as Decode
+module Main exposing (..)
 
-webSocketUrl = "ws://localhost:3000/stream"
+import Html
+import Html.App as App
+
+import Server as API
+
+import Model exposing (Model, Output(..))
+import Message exposing (Message(..))
+import Components as UI
 
 main =
   App.program
     { init = init
-    , view = view
     , update = update
     , subscriptions = subscriptions
+    , view = view
     }
-
--- Model
-
-type Output
-  = ServerMessages (List String)
-  | Message String
-
-type alias Model =
-  { query : String
-  , output : Output
-  }
 
 init : (Model, Cmd a)
 init =
-  (Model "" (Message ""), Cmd.none)
+  (Model "" (Single "Ready."), Cmd.none)
 
--- Update
-
-sendCmd : String -> Cmd Msg
-sendCmd input =
-  WebSocket.send webSocketUrl input
-
-decodeMessage : String -> Result String (List String)
-decodeMessage message =
-  let
-    messageDecoder =
-      Decode.at ["messages"] (Decode.list Decode.string)
-  in
-    Decode.decodeString messageDecoder message
-
-type Msg
-  = ChangeQuery String
-  | Fetch
-  | Receive String
-
-update : Msg -> Model -> (Model, Cmd Msg)
+update : Message -> Model -> (Model, Cmd Message)
 update msg {query, output} =
   case msg of
     ChangeQuery text ->
       (Model text output, Cmd.none)
 
     Fetch ->
-      (Model query (Message "Awaiting response..."), sendCmd query)
+      (Model query (Model.Single "Awaiting response..."), API.send query)
 
-    Receive text ->
-      case decodeMessage text of
+    Receive json ->
+      case Model.fromJson json of
         Err err ->
-          (Model query (Message err), Cmd.none)
+          (Model query (Model.Single err), Cmd.none)
 
         Ok msgs ->
-          (Model query (ServerMessages msgs), Cmd.none)
+          (Model query (Model.Multiple msgs), Cmd.none)
 
--- subscriptions
+subscriptions : Model -> Sub Message
+subscriptions model = API.listen Receive
 
-subscriptions : Model -> Sub Msg
-subscriptions model =
-  WebSocket.listen webSocketUrl Receive
-
--- View
-
-view : Model -> Html Msg
+view : Model -> Html.Html Message
 view model =
-  div []
-    [ input [ onInput ChangeQuery ] []
-    , button [ onClick Fetch ] [ text "Update" ]
-    , messages model.output
+  UI.layout
+    [ UI.query ChangeQuery Fetch
+    , UI.output model.output
     ]
-
-messages : Output -> Html Msg
-messages output =
-  case output of
-    Message message ->
-      p [] [ text message ]
-
-    ServerMessages messages ->
-      ul [] (List.map (\l -> li [] [ text l ]) messages)
