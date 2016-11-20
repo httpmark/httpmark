@@ -16,7 +16,7 @@ query queryChange submit =
     Html.form [ onSubmit submit ]
         [ label [ for "query" ] [ text "Your query: " ]
         , input [ id "query", onInput queryChange ] []
-        , button [ type' "submit", onClick submit ] [ text "Update" ]
+        , button [ type_ "submit", onClick submit ] [ text "Update" ]
         ]
 
 
