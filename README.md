@@ -24,6 +24,7 @@ There are a few areas you should check out, if you're visiting for the first tim
 
 * Gain an insight into the project history, by checking out [how the project came about](https://github.com/jameshopkins/webapptest/wiki/How-Did-This-Project-Come-About%3F)
 * Check out a [view of the high-level architecture](https://github.com/jameshopkins/webapptest/wiki/High-Level-Architecture) to understand what makes test execution so quick.
+* If you'd like to contribute to the project, you can check out the [guidelines](CONTRIBUTING.md).
 
 ## Current Status
 
