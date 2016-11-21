@@ -1,64 +1,52 @@
-import Html exposing (div, button, text, input)
-import Html.App as App
-import Html.Events exposing (onClick, onInput)
-import Task
-import Http
-import Json.Decode as Json
+module Main exposing (..)
+
+import Html
+import Server as API
+import Model exposing (Model, Output(..))
+import Message exposing (Message(..))
+import Components as UI
 
 
 main =
-  App.program { init = model, view = view, update = update, subscriptions = subscriptions }
-
-type alias Model =
-  { text : String
-  , finalText : String
-  }
-
-model : (Model, Cmd a)
-model =
-  (Model "" "", Cmd.none)
+    Html.program
+        { init = init
+        , update = update
+        , subscriptions = subscriptions
+        , view = view
+        }
 
 
-view model =
-  div []
-    [ input [ onInput UpdateText ] []
-    , button [ onClick GetMoreData ] [ text "Update" ]
-    , div [] [ text (toString model.finalText) ]
-    ]
+init : ( Model, Cmd a )
+init =
+    ( Model "" (Status "Ready."), Cmd.none )
 
 
-type Msg = UpdateText String | UpdateFinalText String | GetMoreData | GetDataFail Http.Error
-
-update : Msg -> Model -> (Model, Cmd Msg)
+update : Message -> Model -> ( Model, Cmd Message )
 update msg model =
-  case msg of
-    UpdateText text ->
-      ({ model | text = text }, Cmd.none)
+    case msg of
+        ChangeQuery text ->
+            ( { model | query = text }, Cmd.none )
 
-    UpdateFinalText finalText ->
-      ({ model | finalText = finalText }, Cmd.none)
+        Fetch ->
+            ( { model | output = Model.Status "Awaiting response..." }, API.send model.query )
 
-    GetMoreData ->
-      (model, getData model.text)
+        Receive json ->
+            case Model.fromJson json of
+                Err err ->
+                    ( { model | output = Model.Status err }, Cmd.none )
 
-    GetDataFail error ->
-      ({ model | finalText = (toString error) }, Cmd.none)
-
-
-getData : String -> Cmd Msg
-getData url =
-  let
-    url =
-      "http://localhost:3000/api?url=" ++ url
-  in
-    Task.perform GetDataFail UpdateFinalText (Http.get decodeResponse url)
+                Ok msgs ->
+                    ( { model | output = Model.Messages msgs }, Cmd.none )
 
 
-subscriptions : Model -> Sub Msg
+subscriptions : Model -> Sub Message
 subscriptions model =
-  Sub.none
+    API.listen Receive
 
 
-decodeResponse : Json.Decoder String
-decodeResponse =
-  Json.at ["url"] Json.string
+view : Model -> Html.Html Message
+view model =
+    UI.layout
+        [ UI.query ChangeQuery Fetch
+        , UI.output model.output
+        ]

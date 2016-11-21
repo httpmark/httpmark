@@ -1,15 +1,17 @@
 import { createServer } from 'http';
 import net from 'net';
+import WebSocket, { Server } from 'ws';
 import express from 'express';
 import { Lambda } from 'aws-sdk';
 import bodyParser from 'body-parser';
 import debug from 'debug';
 import path from 'path';
 
+const PORT = 3000;
+
 const log = (namespace, ...args) =>
   debug(`webapptest:${namespace}`)(...args);
 
-const server = createServer();
 const tcpServer = net.createServer();
 
 tcpServer.on('connection', conn => {
@@ -40,9 +42,8 @@ const lambdaClient = new Lambda({
   secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY
 });
 
-const app = express();
 
-const port = 3000;
+const app = express();
 
 app.use(express.static(path.join(process.cwd(), 'ui', 'build')));
 app.set('view engine', 'pug');
@@ -51,12 +52,11 @@ app.use(bodyParser.json());
 
 app.use(express.static('ui'));
 
-app.get('*', (_, res) => res.render('index', {
-  bundle: process.env.NODE_ENV === 'development' ? 'http://localhost:8080' : ''
-}));
-
-app.get('/api', (req, res) => {
-  res.json(req.query);
+app.get('/', (_, res) => {
+  log('server', 'GET /');
+  res.render('index', {
+    bundle: process.env.NODE_ENV === 'development' ? 'http://localhost:8080' : ''
+  });
 });
 
 app.post('/spawn-agent', (req, res) => {
@@ -73,14 +73,50 @@ app.post('/spawn-agent', (req, res) => {
   });
 });
 
-app.use((err) => {
-  log('server', err);
+const httpServer = createServer();
+const webSocketServer = new Server({
+  path: '/stream',
+  server: httpServer
 });
 
-server.on('request', app);
+const repeatedly = (count, delay, fn) => {
+  const tick = (n) => () => {
+    if (n < 1) {
+      return;
+    }
 
-server.listen(port, () => {
-  log('server', `App server listening on port ${port}`);
+    const timeout = setTimeout(tick(n - 1), delay);
+    fn(count - n, timeout);
+  };
+
+  setTimeout(tick(count), delay);
+};
+
+webSocketServer.on('connection', (ws) => {
+  let ticker;
+
+  log('websocket-server', 'received a new connection');
+
+  ws.on('message', (msg) => {
+    log('websocket-server', `received ${msg}`);
+    // cancel previous ticker
+    clearTimeout(ticker);
+
+    repeatedly(5, 1000, (i, timeout) => {
+      ticker = timeout;
+      const messages = new Array(i + 1).fill(msg);
+      const payload = { messages };
+
+      if (ws.readyState === WebSocket.OPEN) {
+        ws.send(JSON.stringify(payload));
+      }
+    });
+  });
+});
+
+httpServer.on('request', app);
+httpServer.listen(PORT, () => {
+  log('server', `App server listening on port ${PORT}`);
 });
 
 export default app;
