@@ -8,8 +8,8 @@ type alias Messages =
 
 
 type Output
-    = Multiple Messages
-    | Single String
+    = Messages Messages
+    | Status String
 
 
 type alias Model =

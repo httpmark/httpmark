@@ -23,10 +23,10 @@ query queryChange submit =
 output : Output -> Html msg
 output output =
     case output of
-        Single message ->
+        Status message ->
             p [] [ text message ]
 
-        Multiple messages ->
+        Messages messages ->
             div []
                 [ p [] [ text "Server messages:" ]
                 , ul [] (List.map (\l -> li [] [ text l ]) messages)

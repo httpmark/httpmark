@@ -18,7 +18,7 @@ main =
 
 init : ( Model, Cmd a )
 init =
-    ( Model "" (Single "Ready."), Cmd.none )
+    ( Model "" (Status "Ready."), Cmd.none )
 
 
 update : Message -> Model -> ( Model, Cmd Message )
@@ -28,15 +28,15 @@ update msg model =
             ( { model | query = text }, Cmd.none )
 
         Fetch ->
-            ( { model | output = Model.Single "Awaiting response..." }, API.send model.query )
+            ( { model | output = Model.Status "Awaiting response..." }, API.send model.query )
 
         Receive json ->
             case Model.fromJson json of
                 Err err ->
-                    ( { model | output = Model.Single err }, Cmd.none )
+                    ( { model | output = Model.Status err }, Cmd.none )
 
                 Ok msgs ->
-                    ( { model | output = Model.Multiple msgs }, Cmd.none )
+                    ( { model | output = Model.Messages msgs }, Cmd.none )
 
 
 subscriptions : Model -> Sub Message
