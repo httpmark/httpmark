@@ -1,0 +1,8 @@
+version: '1.0'
+steps:
+  build-agent:
+    type: build
+    description: Build agent
+    dockerfile: agent/Dockerfile
+    image-name: myuser/myservice
+    tag: develop # ${{CF_BRANCH}}
