@@ -1,5 +1,5 @@
 {
-  "name": "webapptest-chrome-extension",
+  "name": "httpmark-chrome-extension",
   "version": "0.0.1",
   "private": true,
   "description": "Chrome extension responsible for managing the in-browser test orchestration and forwarding the subsequent metrics",

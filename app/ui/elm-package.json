@@ -1,7 +1,7 @@
 {
     "version": "0.0.1",
     "summary": "Front-end for web app test",
-    "repository": "https://github.com/jameshopkins/webapptest.git",
+    "repository": "https://github.com/jameshopkins/httpmark.git",
     "license": "MIT",
     "source-directories": [
         "src"

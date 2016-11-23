@@ -1,6 +1,6 @@
 {
   "manifest_version": 2,
-  "name": "WebAppTest Test Agent",
+  "name": "httpmark Test Agent",
   "description": "Responsible for managing the in-browser test orchestration and forwarding the subsequent metrics",
   "version": "0.1",
   "background": {

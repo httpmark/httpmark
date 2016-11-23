@@ -6,7 +6,7 @@ describe('Creating a HAR blob', () => {
     const expected = {
       log: {
         creator: {
-          name: 'WebAppTest',
+          name: 'httpmark',
           version: '0.1'
         },
         pages : {
@@ -26,7 +26,7 @@ describe('Creating a HAR blob', () => {
       const expected = {
         log: {
           creator: {
-            name: 'WebAppTest',
+            name: 'httpmark',
             version: '0.1'
           },
           pages : {
@@ -46,7 +46,7 @@ describe('Creating a HAR blob', () => {
       const expected = {
         log: {
           creator: {
-            name: 'WebAppTest',
+            name: 'httpmark',
             version: '0.1'
           },
           pages : {
@@ -67,7 +67,7 @@ describe('Creating a HAR blob', () => {
       const expected = {
         log: {
           creator: {
-            name: 'WebAppTest',
+            name: 'httpmark',
             version: '0.1'
           },
           pages : {

@@ -1,6 +1,6 @@
 # Application
 
-This application provides the WebAppTest UI.
+This application provides the httpmark UI.
 
 The [UI](ui) itself is written in Elm, served by a Node (Express) [server](server).
 

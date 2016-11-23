@@ -1,8 +1,8 @@
 {
-  "name": "webapptest-agent",
+  "name": "httpmark-agent",
   "version": "0.0.1",
   "private": true,
-  "description": "The test agent for WebAppTest",
+  "description": "The test agent for httpmark",
   "main": "index.js",
   "scripts": {
     "test:server": "mocha server/**/*.spec.js",

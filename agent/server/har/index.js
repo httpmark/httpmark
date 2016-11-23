@@ -3,7 +3,7 @@ import { append, lensPath, merge, over } from 'ramda';
 export default () => ({
   log: {
     creator: {
-      name: 'WebAppTest',
+      name: 'httpmark',
       version: '0.1'
     },
     pages : {

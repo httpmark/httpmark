@@ -1,5 +1,5 @@
 resource "aws_ecr_repository" "default" {
-  name = "webapptest-test-agent-${var.environment}"
+  name = "httpmark-test-agent-${var.environment}"
 }
 
 resource "aws_ecr_repository_policy" "default" {

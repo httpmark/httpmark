@@ -7,7 +7,7 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )";
 cd $DIR/../../infrastructure
 
 ECR_TAG=`terraform output ecr_repository_url`
-LOCAL_TAG="webapptest_test_agent"
+LOCAL_TAG="httpmark_test_agent"
 
 echo "Tagging and pushing tag"
 docker tag $LOCAL_TAG $ECR_TAG
