@@ -66,10 +66,88 @@ malformedRequestJson =
 """
 
 
+responseJson =
+    """
+{
+  "status": 200,
+  "statusText": "OK",
+  "httpVersion": "HTTP/1.1",
+  "cookies": [],
+  "headers": [],
+  "content": {
+    "size": 850,
+    "compression": 0,
+    "mimeType": "text/html; charset=utf-8",
+    "text": "foo",
+    "comment": ""
+  },
+  "redirectURL": "",
+  "headersSize" : 160,
+  "bodySize" : 850,
+  "comment" : ""
+}
+  """
+
+
+responseWithHeadersJson =
+    """
+{
+  "status": 200,
+  "statusText": "OK",
+  "httpVersion": "HTTP/1.1",
+  "cookies": [],
+  "headers": [
+    {
+      "name": "Accept",
+      "value": "text/html; charset=utf-8"
+    },
+    {
+      "name": "X-Hello",
+      "value": "Hi"
+    }
+  ],
+  "content": {
+    "size": 850,
+    "compression": 0,
+    "mimeType": "text/html; charset=utf-8",
+    "text": "foo",
+    "comment": ""
+  },
+  "redirectURL": "",
+  "headersSize" : 160,
+  "bodySize" : 850,
+  "comment" : ""
+}
+  """
+
+
+malformedResponseJson =
+    """
+{
+  "status": 200,
+  "statusText": "OK",
+  "httpVersion": "HTTP/1.1",
+  "cookies": [],
+  "headers": ["foo"],
+  "content": {
+    "size": 850,
+    "compression": 0,
+    "mimeType": "text/html; charset=utf-8",
+    "text": "foo",
+    "comment": ""
+  },
+  "redirectURL": "",
+  "headersSize" : 160,
+  "bodySize" : 850,
+  "comment" : ""
+}
+  """
+
+
 all : Test
 all =
     describe "HttpArchive"
-        [ describe "Parsing a log"
+        [ describe "Parsing a Request"
             [ test "decodes a request with no headers" <|
                 \_ ->
                     let
@@ -118,5 +196,65 @@ all =
                             malformedRequestJson
                     in
                         MyExpect.err (parse HttpArchive.request input)
+            ]
+        , describe "Parsing a Response"
+            [ test "decodes a response with no headers" <|
+                \_ ->
+                    let
+                        input =
+                            responseJson
+
+                        output =
+                            (parse HttpArchive.response input)
+
+                        expected =
+                            Ok
+                                { status = 200
+                                , statusText = "OK"
+                                , headers = []
+                                , content =
+                                    { size = 850
+                                    , mimeType = "text/html; charset=utf-8"
+                                    , text = "foo"
+                                    }
+                                , headersSize = 160
+                                , bodySize = 850
+                                }
+                    in
+                        Expect.equal expected output
+            , test "decodes a response with headers" <|
+                \_ ->
+                    let
+                        input =
+                            responseWithHeadersJson
+
+                        output =
+                            (parse HttpArchive.response input)
+
+                        expected =
+                            Ok
+                                { status = 200
+                                , statusText = "OK"
+                                , headers =
+                                    [ { name = "Accept", value = "text/html; charset=utf-8" }
+                                    , { name = "X-Hello", value = "Hi" }
+                                    ]
+                                , content =
+                                    { size = 850
+                                    , mimeType = "text/html; charset=utf-8"
+                                    , text = "foo"
+                                    }
+                                , headersSize = 160
+                                , bodySize = 850
+                                }
+                    in
+                        Expect.equal expected output
+            , test "returns error for invalid JSON" <|
+                \_ ->
+                    let
+                        input =
+                            malformedResponseJson
+                    in
+                        MyExpect.err (parse HttpArchive.response input)
             ]
         ]

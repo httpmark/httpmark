@@ -18,11 +18,36 @@ type alias Request =
     }
 
 
+type alias Content =
+    { size : Int
+    , mimeType : String
+    , text : String
+    }
+
+
+type alias Response =
+    { status : Int
+    , statusText : String
+    , headers : List Header
+    , content : Content
+    , headersSize : Int
+    , bodySize : Int
+    }
+
+
 header : Decoder Header
 header =
     map2 Header
         (field "name" string)
         (field "value" string)
+
+
+content : Decoder Content
+content =
+    map3 Content
+        (field "size" int)
+        (field "mimeType" string)
+        (field "text" string)
 
 
 request : Decoder Request
@@ -31,6 +56,17 @@ request =
         (field "method" string)
         (field "url" string)
         (field "headers" (list header))
+        (field "headersSize" int)
+        (field "bodySize" int)
+
+
+response : Decoder Response
+response =
+    map6 Response
+        (field "status" int)
+        (field "statusText" string)
+        (field "headers" (list header))
+        (field "content" content)
         (field "headersSize" int)
         (field "bodySize" int)
 
