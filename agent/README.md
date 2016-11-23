@@ -1,4 +1,4 @@
-# WebAppTest Agent
+# httpmark Agent
 
 ## [Infrastructure](infrastructure/README.md)
 
@@ -6,12 +6,12 @@
 
 ### Building the Docker image
 ```bash
-docker build -t webapptest_test_agent .
+docker build -t httpmark_test_agent .
 ```
 
 ### Running a container based off the image
 ```bash
-docker run -it -e TEST_ENDPOINT='http://www.example.com' $(docker images -q webapptest_test_agent)
+docker run -it -e TEST_ENDPOINT='http://www.example.com' $(docker images -q httpmark_test_agent)
 
 ```
 

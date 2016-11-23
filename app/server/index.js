@@ -10,7 +10,7 @@ import path from 'path';
 const PORT = 3000;
 
 const log = (namespace, ...args) =>
-  debug(`webapptest:${namespace}`)(...args);
+  debug(`httpmark:${namespace}`)(...args);
 
 const tcpServer = net.createServer();
 
@@ -20,6 +20,7 @@ tcpServer.on('connection', conn => {
 
   conn.on('data', d => {
     log('tcp-server', 'connection data from %s: %j', remoteAddress, d);
+    console.log(d);
     conn.write(d);
   });
 
@@ -61,7 +62,7 @@ app.get('/', (_, res) => {
 
 app.post('/spawn-agent', (req, res) => {
   lambdaClient.invoke({
-    FunctionName: 'webapptest_agents',
+    FunctionName: 'httpmark_agents',
     Payload: JSON.stringify({
       url: 'some URL!!',
       tcpHost: process.env.TCP_HOST,

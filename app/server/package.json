@@ -1,8 +1,8 @@
 {
-  "name": "webapptest-server",
+  "name": "httpmark-server",
   "version": "0.0.1",
   "private": true,
-  "description": "webapptest: server / api",
+  "description": "httpmark: server / api",
   "main": "index.js",
   "engines": {
     "node": "6.2.1"
