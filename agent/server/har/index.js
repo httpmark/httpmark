@@ -1,30 +1,18 @@
-export default class {
-  assets = [];
-  timings = {}
+import { append, lensPath, merge, over } from 'ramda';
 
-  getBlob() {
-    return {
-      log: {
-        creator: {
-          name: 'WebAppTest',
-          version: '0.1'
-        },
-        pages : {
-          id: '0',
-          pageTimings: this.timings
-        },
-        assets: this.assets
-      }
-    };
+export default () => ({
+  log: {
+    creator: {
+      name: 'WebAppTest',
+      version: '0.1'
+    },
+    pages : {
+      id: '0',
+      pageTimings: {}
+    },
+    assets: []
   }
+});
 
-  addAsset(asset) {
-    this.assets = [...this.assets, asset];
-    return this.getBlob();
-  }
-
-  addTiming({ event, timing }) {
-    this.timings = { ...this.timings, [event]: timing };
-    return this.getBlob();
-  }
-}
+export const addAsset = asset => over(lensPath(['log', 'assets']), append(asset));
+export const addTiming = timing => over(lensPath(['log', 'pages', 'pageTimings']), merge(timing));
