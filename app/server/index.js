@@ -7,6 +7,8 @@ import bodyParser from 'body-parser';
 import debug from 'debug';
 import path from 'path';
 
+import MOCK_HAR from '../fixtures/google.har';
+
 const PORT = 3000;
 
 const log = (namespace, ...args) =>
@@ -79,38 +81,16 @@ const webSocketServer = new Server({
   server: httpServer
 });
 
-const repeatedly = (count, delay, fn) => {
-  const tick = (n) => () => {
-    if (n < 1) {
-      return;
-    }
-
-    const timeout = setTimeout(tick(n - 1), delay);
-    fn(count - n, timeout);
-  };
-
-  setTimeout(tick(count), delay);
-};
-
 webSocketServer.on('connection', (ws) => {
-  let ticker;
-
   log('websocket-server', 'received a new connection');
 
   ws.on('message', (msg) => {
     log('websocket-server', `received ${msg}`);
     // cancel previous ticker
-    clearTimeout(ticker);
 
-    repeatedly(5, 1000, (i, timeout) => {
-      ticker = timeout;
-      const messages = new Array(i + 1).fill(msg);
-      const payload = { messages };
-
-      if (ws.readyState === WebSocket.OPEN) {
-        ws.send(JSON.stringify(payload));
-      }
-    });
+    if (ws.readyState === WebSocket.OPEN) {
+      ws.send(JSON.stringify(MOCK_HAR));
+    }
   });
 });
 

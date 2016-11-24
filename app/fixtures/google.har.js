@@ -1,4 +1,4 @@
-{
+export default {
   "log": {
     "version": "1.2",
     "creator": {
