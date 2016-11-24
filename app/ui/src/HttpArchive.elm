@@ -1,6 +1,7 @@
 module HttpArchive exposing (..)
 
 import Json.Decode exposing (..)
+import Date
 
 
 type alias Header =
@@ -33,6 +34,46 @@ type alias Response =
     , headersSize : Int
     , bodySize : Int
     }
+
+
+type alias Entry =
+    { startedDateTime : Date.Date
+    , time : Int
+    , request : Request
+    , response : Response
+    , timings : Timings
+    }
+
+
+type alias Timings =
+    { blocked : Int
+    , dns : Int
+    , connect : Int
+    , send : Int
+    , wait : Int
+    , receive : Int
+    , ssl : Int
+    }
+
+
+type alias Log =
+    { entries : List Entry
+    }
+
+
+fromJson : String -> Result Log
+fromJson json =
+    parse log json
+
+
+dateStringDecode : String -> Decoder Date.Date
+dateStringDecode str =
+    case Date.fromString str of
+        Err err ->
+            fail err
+
+        Ok d ->
+            succeed d
 
 
 header : Decoder Header
@@ -69,6 +110,34 @@ response =
         (field "content" content)
         (field "headersSize" int)
         (field "bodySize" int)
+
+
+timings : Decoder Timings
+timings =
+    map7 Timings
+        (field "blocked" int)
+        (field "dns" int)
+        (field "connect" int)
+        (field "send" int)
+        (field "wait" int)
+        (field "receive" int)
+        (field "ssl" int)
+
+
+entry : Decoder Entry
+entry =
+    map5 Entry
+        (field "startedDateTime" (string |> andThen dateStringDecode))
+        (field "time" int)
+        (field "request" request)
+        (field "response" response)
+        (field "timings" timings)
+
+
+log : Decoder Log
+log =
+    map Log
+        (field "entries" (list entry))
 
 
 parse : Decoder a -> String -> Result String a

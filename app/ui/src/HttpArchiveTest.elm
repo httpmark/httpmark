@@ -1,5 +1,6 @@
 module HttpArchiveTest exposing (all)
 
+import Date
 import Test exposing (..)
 import Expect
 import Expectations as MyExpect
@@ -21,6 +22,15 @@ requestJson =
     "comment" : ""
 }
 """
+
+
+request =
+    { method = "GET"
+    , url = "http://www.example.com/path/?param=value"
+    , headers = []
+    , headersSize = 150
+    , bodySize = 0
+    }
 
 
 requestWithHeadersJson =
@@ -49,21 +59,16 @@ requestWithHeadersJson =
 """
 
 
-malformedRequestJson =
-    """
-{
-"method": "GET",
-"url": "http://www.example.com/path/?param=value",
-"httpVersion": "HTTP/1.1",
-"cookies": [],
-"headers": ["foo", "bar"],
-"queryString" : [],
-"postData" : {},
-"headersSize" : 150,
-"bodySize" : 0,
-"comment" : ""
-}
-"""
+requestWithHeaders =
+    { method = "GET"
+    , url = "http://www.example.com/path/?param=value"
+    , headers =
+        [ { name = "Accept", value = "text/html; charset=utf-8" }
+        , { name = "X-Hello", value = "Hi" }
+        ]
+    , headersSize = 150
+    , bodySize = 0
+    }
 
 
 responseJson =
@@ -87,6 +92,20 @@ responseJson =
   "comment" : ""
 }
   """
+
+
+response =
+    { status = 200
+    , statusText = "OK"
+    , headers = []
+    , content =
+        { size = 850
+        , mimeType = "text/html; charset=utf-8"
+        , text = "foo"
+        }
+    , headersSize = 160
+    , bodySize = 850
+    }
 
 
 responseWithHeadersJson =
@@ -121,27 +140,97 @@ responseWithHeadersJson =
   """
 
 
-malformedResponseJson =
+responseWithHeaders =
+    { status = 200
+    , statusText = "OK"
+    , headers =
+        [ { name = "Accept", value = "text/html; charset=utf-8" }
+        , { name = "X-Hello", value = "Hi" }
+        ]
+    , content =
+        { size = 850
+        , mimeType = "text/html; charset=utf-8"
+        , text = "foo"
+        }
+    , headersSize = 160
+    , bodySize = 850
+    }
+
+
+entryJson =
     """
 {
-  "status": 200,
-  "statusText": "OK",
-  "httpVersion": "HTTP/1.1",
-  "cookies": [],
-  "headers": ["foo"],
-  "content": {
-    "size": 850,
-    "compression": 0,
-    "mimeType": "text/html; charset=utf-8",
-    "text": "foo",
+    "startedDateTime": "2009-04-16T12:07:23.596Z",
+    "time": 50,
+    "request":
+"""
+        ++ requestJson
+        ++ """,
+    "response":
+"""
+        ++ responseJson
+        ++ """,
+    "cache": {},
+    "timings": {
+        "blocked": 0,
+        "dns": -1,
+        "connect": 15,
+        "send": 20,
+        "wait": 38,
+        "receive": 12,
+        "ssl": -1
+    },
+    "serverIPAddress": "10.0.0.1",
+    "connection": "52492",
     "comment": ""
-  },
-  "redirectURL": "",
-  "headersSize" : 160,
-  "bodySize" : 850,
-  "comment" : ""
+}
+    """
+
+
+timings =
+    { blocked = 0
+    , dns = -1
+    , connect = 15
+    , send = 20
+    , wait = 38
+    , receive = 12
+    , ssl = -1
+    }
+
+
+entry =
+    { startedDateTime = (Result.withDefault (Date.fromTime 0) (Date.fromString "2009-04-16T12:07:23.596Z"))
+    , time = 50
+    , request = request
+    , response = response
+    , timings = timings
+    }
+
+
+logJson =
+    """
+{
+    "version" : "1.2",
+    "creator" : {},
+    "browser" : {},
+    "pages": [],
+    "entries": [
+    """
+        ++ entryJson
+        ++ """
+    ,
+    """
+        ++ entryJson
+        ++ """
+    ],
+    "comment": ""
 }
   """
+
+
+log =
+    { entries = [ entry, entry ]
+    }
 
 
 all : Test
@@ -158,13 +247,7 @@ all =
                             (parse HttpArchive.request input)
 
                         expected =
-                            Ok
-                                { method = "GET"
-                                , url = "http://www.example.com/path/?param=value"
-                                , headers = []
-                                , headersSize = 150
-                                , bodySize = 0
-                                }
+                            Ok request
                     in
                         Expect.equal expected output
             , test "decodes a request with headers" <|
@@ -177,25 +260,9 @@ all =
                             (parse HttpArchive.request input)
 
                         expected =
-                            Ok
-                                { method = "GET"
-                                , url = "http://www.example.com/path/?param=value"
-                                , headers =
-                                    [ { name = "Accept", value = "text/html; charset=utf-8" }
-                                    , { name = "X-Hello", value = "Hi" }
-                                    ]
-                                , headersSize = 150
-                                , bodySize = 0
-                                }
+                            Ok requestWithHeaders
                     in
                         Expect.equal expected output
-            , test "returns error for invalid JSON" <|
-                \_ ->
-                    let
-                        input =
-                            malformedRequestJson
-                    in
-                        MyExpect.err (parse HttpArchive.request input)
             ]
         , describe "Parsing a Response"
             [ test "decodes a response with no headers" <|
@@ -208,18 +275,7 @@ all =
                             (parse HttpArchive.response input)
 
                         expected =
-                            Ok
-                                { status = 200
-                                , statusText = "OK"
-                                , headers = []
-                                , content =
-                                    { size = 850
-                                    , mimeType = "text/html; charset=utf-8"
-                                    , text = "foo"
-                                    }
-                                , headersSize = 160
-                                , bodySize = 850
-                                }
+                            Ok response
                     in
                         Expect.equal expected output
             , test "decodes a response with headers" <|
@@ -232,29 +288,38 @@ all =
                             (parse HttpArchive.response input)
 
                         expected =
-                            Ok
-                                { status = 200
-                                , statusText = "OK"
-                                , headers =
-                                    [ { name = "Accept", value = "text/html; charset=utf-8" }
-                                    , { name = "X-Hello", value = "Hi" }
-                                    ]
-                                , content =
-                                    { size = 850
-                                    , mimeType = "text/html; charset=utf-8"
-                                    , text = "foo"
-                                    }
-                                , headersSize = 160
-                                , bodySize = 850
-                                }
+                            Ok responseWithHeaders
                     in
                         Expect.equal expected output
-            , test "returns error for invalid JSON" <|
+            ]
+        , describe "Parsing an Entry"
+            [ test "decodes an entry with timings, request and response" <|
                 \_ ->
                     let
                         input =
-                            malformedResponseJson
+                            entryJson
+
+                        output =
+                            (parse HttpArchive.entry input)
+
+                        expected =
+                            Ok entry
                     in
-                        MyExpect.err (parse HttpArchive.response input)
+                        Expect.equal expected output
+            ]
+        , describe "Parsing a Log"
+            [ test "decodes a log with two full entries" <|
+                \_ ->
+                    let
+                        input =
+                            logJson
+
+                        output =
+                            (parse HttpArchive.log input)
+
+                        expected =
+                            Ok log
+                    in
+                        Expect.equal expected output
             ]
         ]
