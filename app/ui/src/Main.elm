@@ -2,11 +2,13 @@ module Main exposing (..)
 
 import Html
 import Server as API
-import Model exposing (Model, Output(..))
+import Model exposing (Model, Output(..), updateFromResponse)
 import Message exposing (Message(..))
 import Components as UI
+import HttpArchive exposing (fromJson)
 
 
+main : Program Never Model Message
 main =
     Html.program
         { init = init
@@ -31,12 +33,7 @@ update msg model =
             ( { model | output = Model.Status "Awaiting response..." }, API.send model.query )
 
         Receive json ->
-            case Model.fromJson json of
-                Err err ->
-                    ( { model | output = Model.Status err }, Cmd.none )
-
-                Ok msgs ->
-                    ( { model | output = Model.Messages msgs }, Cmd.none )
+            ( Model.updateFromResponse (fromJson json) model, Cmd.none )
 
 
 subscriptions : Model -> Sub Message

@@ -4,6 +4,7 @@ import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (onClick, onInput, onSubmit)
 import Model exposing (Output(..))
+import HttpArchive
 
 
 layout : List (Html msg) -> Html msg
@@ -26,8 +27,42 @@ output output =
         Status message ->
             p [] [ text message ]
 
-        Messages messages ->
-            div []
-                [ p [] [ text "Server messages:" ]
-                , ul [] (List.map (\l -> li [] [ text l ]) messages)
+        Archive log ->
+            harLog log
+
+
+
+-- HAR components
+-- TODO extract these out into the HttpArchive viewer
+
+
+harLog : HttpArchive.Log -> Html msg
+harLog log =
+    table []
+        [ thead []
+            [ tr []
+                [ th [] [ text "URL" ]
+                , th [] [ text "Method" ]
+                , th [] [ text "Status" ]
+                , th [] [ text "Size" ]
+                , th [] [ text "Time" ]
                 ]
+            ]
+        , tbody [] <| List.map harEntry log.entries
+        ]
+
+
+truncate : Float -> String
+truncate number =
+    ((number * 100) |> round |> toFloat) / 100 |> toString
+
+
+harEntry : HttpArchive.Entry -> Html msg
+harEntry entry =
+    tr []
+        [ td [] [ text (String.left 100 entry.request.url) ]
+        , td [] [ text entry.request.method ]
+        , td [] [ text (toString entry.response.status) ]
+        , td [] [ text ((toString entry.response.content.size) ++ " B") ]
+        , td [] [ text ((truncate entry.time) ++ " ms") ]
+        ]
