@@ -22,7 +22,7 @@ type alias Request =
 type alias Content =
     { size : Int
     , mimeType : String
-    , text : String
+    , text : Maybe String
     }
 
 
@@ -38,7 +38,7 @@ type alias Response =
 
 type alias Entry =
     { startedDateTime : Date.Date
-    , time : Int
+    , time : Float
     , request : Request
     , response : Response
     , timings : Timings
@@ -46,13 +46,13 @@ type alias Entry =
 
 
 type alias Timings =
-    { blocked : Int
-    , dns : Int
-    , connect : Int
-    , send : Int
-    , wait : Int
-    , receive : Int
-    , ssl : Int
+    { blocked : Float
+    , dns : Float
+    , connect : Float
+    , send : Float
+    , wait : Float
+    , receive : Float
+    , ssl : Float
     }
 
 
@@ -61,7 +61,7 @@ type alias Log =
     }
 
 
-fromJson : String -> Result Log
+fromJson : String -> Result String Log
 fromJson json =
     parse log json
 
@@ -88,7 +88,7 @@ content =
     map3 Content
         (field "size" int)
         (field "mimeType" string)
-        (field "text" string)
+        (maybe (field "text" string))
 
 
 request : Decoder Request
@@ -115,20 +115,20 @@ response =
 timings : Decoder Timings
 timings =
     map7 Timings
-        (field "blocked" int)
-        (field "dns" int)
-        (field "connect" int)
-        (field "send" int)
-        (field "wait" int)
-        (field "receive" int)
-        (field "ssl" int)
+        (field "blocked" float)
+        (field "dns" float)
+        (field "connect" float)
+        (field "send" float)
+        (field "wait" float)
+        (field "receive" float)
+        (field "ssl" float)
 
 
 entry : Decoder Entry
 entry =
     map5 Entry
         (field "startedDateTime" (string |> andThen dateStringDecode))
-        (field "time" int)
+        (field "time" float)
         (field "request" request)
         (field "response" response)
         (field "timings" timings)
@@ -136,8 +136,8 @@ entry =
 
 log : Decoder Log
 log =
-    map Log
-        (field "entries" (list entry))
+    field "log" <|
+        map Log (field "entries" (list entry))
 
 
 parse : Decoder a -> String -> Result String a

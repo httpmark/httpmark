@@ -101,7 +101,7 @@ response =
     , content =
         { size = 850
         , mimeType = "text/html; charset=utf-8"
-        , text = "foo"
+        , text = Just "foo"
         }
     , headersSize = 160
     , bodySize = 850
@@ -150,7 +150,7 @@ responseWithHeaders =
     , content =
         { size = 850
         , mimeType = "text/html; charset=utf-8"
-        , text = "foo"
+        , text = Just "foo"
         }
     , headersSize = 160
     , bodySize = 850
@@ -210,22 +210,24 @@ entry =
 logJson =
     """
 {
-    "version" : "1.2",
-    "creator" : {},
-    "browser" : {},
-    "pages": [],
-    "entries": [
+    "log": {
+        "version" : "1.2",
+        "creator" : {},
+        "browser" : {},
+        "pages": [],
+        "entries": [
     """
         ++ entryJson
         ++ """
-    ,
+        ,
     """
         ++ entryJson
         ++ """
-    ],
-    "comment": ""
+        ],
+        "comment": ""
+    }
 }
-  """
+    """
 
 
 log =
