@@ -207,6 +207,33 @@ entry =
     }
 
 
+pageJson =
+    """
+{
+  "startedDateTime": "2009-04-16T12:07:25.123+01:00",
+  "id": "page_0",
+  "title": "Test Page",
+  "pageTimings": {
+    "onContentLoad": 1720,
+    "onLoad": 2500,
+    "comment": ""
+  },
+  "comment": ""
+}
+    """
+
+
+page =
+    { startedDateTime = (Result.withDefault (Date.fromTime 0) (Date.fromString "2009-04-16T12:07:25.123+01:00"))
+    , id = "page_0"
+    , title = "Test Page"
+    , pageTimings =
+        { onContentLoad = 1720
+        , onLoad = 2500
+        }
+    }
+
+
 logJson =
     """
 {
@@ -214,7 +241,11 @@ logJson =
         "version" : "1.2",
         "creator" : {},
         "browser" : {},
-        "pages": [],
+        "pages": [
+        """
+        ++ pageJson
+        ++ """
+        ],
         "entries": [
     """
         ++ entryJson
@@ -231,7 +262,8 @@ logJson =
 
 
 log =
-    { entries = [ entry, entry ]
+    { pages = [ page ]
+    , entries = [ entry, entry ]
     }
 
 
@@ -289,9 +321,17 @@ all =
             )
         , describe "Parsing an Entry"
             (equalityTests
-                [ { descriptions = "decodes an entry with timings, request and response"
+                [ { description = "decodes an entry with timings, request and response"
                   , output = (parse HttpArchive.entry entryJson)
                   , expected = Ok entry
+                  }
+                ]
+            )
+        , describe "Parsing a Page"
+            (equalityTests
+                [ { description = "decodes a page"
+                  , output = (parse HttpArchive.page pageJson)
+                  , expected = Ok page
                   }
                 ]
             )

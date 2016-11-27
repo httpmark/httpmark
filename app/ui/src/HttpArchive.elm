@@ -56,8 +56,23 @@ type alias Timings =
     }
 
 
+type alias Page =
+    { startedDateTime : Date.Date
+    , id : String
+    , title : String
+    , pageTimings : PageTimings
+    }
+
+
+type alias PageTimings =
+    { onContentLoad : Float
+    , onLoad : Float
+    }
+
+
 type alias Log =
-    { entries : List Entry
+    { pages : List Page
+    , entries : List Entry
     }
 
 
@@ -134,10 +149,28 @@ entry =
         (field "timings" timings)
 
 
+pageTimings : Decoder PageTimings
+pageTimings =
+    map2 PageTimings
+        (field "onContentLoad" float)
+        (field "onLoad" float)
+
+
+page : Decoder Page
+page =
+    map4 Page
+        (field "startedDateTime" (string |> andThen dateStringDecode))
+        (field "id" string)
+        (field "title" string)
+        (field "pageTimings" pageTimings)
+
+
 log : Decoder Log
 log =
     field "log" <|
-        map Log (field "entries" (list entry))
+        map2 Log
+            (field "pages" (list page))
+            (field "entries" (list entry))
 
 
 parse : Decoder a -> String -> Result String a
