@@ -235,93 +235,72 @@ log =
     }
 
 
+
+-- Helpers
+
+
+type alias TestDescription outputType =
+    { description : String
+    , output : outputType
+    , expected : outputType
+    }
+
+
+equalityTest : TestDescription out -> Test
+equalityTest { description, output, expected } =
+    test description <|
+        \_ -> Expect.equal expected output
+
+
+equalityTests =
+    List.map equalityTest
+
+
+
+-- Tests
+
+
 all : Test
 all =
     describe "HttpArchive"
         [ describe "Parsing a Request"
-            [ test "decodes a request with no headers" <|
-                \_ ->
-                    let
-                        input =
-                            requestJson
-
-                        output =
-                            (parse HttpArchive.request input)
-
-                        expected =
-                            Ok request
-                    in
-                        Expect.equal expected output
-            , test "decodes a request with headers" <|
-                \_ ->
-                    let
-                        input =
-                            requestWithHeadersJson
-
-                        output =
-                            (parse HttpArchive.request input)
-
-                        expected =
-                            Ok requestWithHeaders
-                    in
-                        Expect.equal expected output
-            ]
+            (equalityTests
+                [ { description = "decodes a request with no headers"
+                  , output = (parse HttpArchive.request requestJson)
+                  , expected = Ok request
+                  }
+                , { description = "decodes a request with headers"
+                  , output = (parse HttpArchive.request requestWithHeadersJson)
+                  , expected = Ok requestWithHeaders
+                  }
+                ]
+            )
         , describe "Parsing a Response"
-            [ test "decodes a response with no headers" <|
-                \_ ->
-                    let
-                        input =
-                            responseJson
-
-                        output =
-                            (parse HttpArchive.response input)
-
-                        expected =
-                            Ok response
-                    in
-                        Expect.equal expected output
-            , test "decodes a response with headers" <|
-                \_ ->
-                    let
-                        input =
-                            responseWithHeadersJson
-
-                        output =
-                            (parse HttpArchive.response input)
-
-                        expected =
-                            Ok responseWithHeaders
-                    in
-                        Expect.equal expected output
-            ]
+            (equalityTests
+                [ { description = "decodes a response with no headers"
+                  , output = (parse HttpArchive.response responseJson)
+                  , expected = Ok response
+                  }
+                , { description = "decodes a response with headers"
+                  , output = (parse HttpArchive.response responseWithHeadersJson)
+                  , expected = Ok responseWithHeaders
+                  }
+                ]
+            )
         , describe "Parsing an Entry"
-            [ test "decodes an entry with timings, request and response" <|
-                \_ ->
-                    let
-                        input =
-                            entryJson
-
-                        output =
-                            (parse HttpArchive.entry input)
-
-                        expected =
-                            Ok entry
-                    in
-                        Expect.equal expected output
-            ]
+            (equalityTests
+                [ { descriptions = "decodes an entry with timings, request and response"
+                  , output = (parse HttpArchive.entry entryJson)
+                  , expected = Ok entry
+                  }
+                ]
+            )
         , describe "Parsing a Log"
-            [ test "decodes a log with two full entries" <|
-                \_ ->
-                    let
-                        input =
-                            logJson
-
-                        output =
-                            (parse HttpArchive.log input)
-
-                        expected =
-                            Ok log
-                    in
-                        Expect.equal expected output
-            ]
+            (equalityTests
+                [ { description = "decodes a log with two full entries"
+                  , output = (parse HttpArchive.log logJson)
+                  , expected = Ok log
+                  }
+                ]
+            )
         ]
