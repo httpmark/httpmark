@@ -1,12 +1,10 @@
-module HttpArchiveTest exposing (all)
+module HttpArchive.TypesTest.Fixtures exposing (..)
 
+import HttpArchive.Types exposing (..)
 import Date
-import Test exposing (..)
-import Expect
-import Expectations as MyExpect
-import HttpArchive exposing (..)
 
 
+requestJson : String
 requestJson =
     """
 {
@@ -24,6 +22,7 @@ requestJson =
 """
 
 
+request : Request
 request =
     { method = "GET"
     , url = "http://www.example.com/path/?param=value"
@@ -33,6 +32,7 @@ request =
     }
 
 
+requestWithHeadersJson : String
 requestWithHeadersJson =
     """
 {
@@ -59,6 +59,7 @@ requestWithHeadersJson =
 """
 
 
+requestWithHeaders : Request
 requestWithHeaders =
     { method = "GET"
     , url = "http://www.example.com/path/?param=value"
@@ -71,6 +72,7 @@ requestWithHeaders =
     }
 
 
+responseJson : String
 responseJson =
     """
 {
@@ -94,6 +96,7 @@ responseJson =
   """
 
 
+response : Response
 response =
     { status = 200
     , statusText = "OK"
@@ -108,6 +111,7 @@ response =
     }
 
 
+responseWithHeadersJson : String
 responseWithHeadersJson =
     """
 {
@@ -140,6 +144,7 @@ responseWithHeadersJson =
   """
 
 
+responseWithHeaders : Response
 responseWithHeaders =
     { status = 200
     , statusText = "OK"
@@ -157,6 +162,7 @@ responseWithHeaders =
     }
 
 
+entryJson : String
 entryJson =
     """
 {
@@ -187,6 +193,17 @@ entryJson =
     """
 
 
+entry : Entry
+entry =
+    { startedDateTime = (Result.withDefault (Date.fromTime 0) (Date.fromString "2009-04-16T12:07:23.596Z"))
+    , time = 50
+    , request = request
+    , response = response
+    , timings = timings
+    }
+
+
+timings : Timings
 timings =
     { blocked = 0
     , dns = -1
@@ -198,15 +215,7 @@ timings =
     }
 
 
-entry =
-    { startedDateTime = (Result.withDefault (Date.fromTime 0) (Date.fromString "2009-04-16T12:07:23.596Z"))
-    , time = 50
-    , request = request
-    , response = response
-    , timings = timings
-    }
-
-
+pageJson : String
 pageJson =
     """
 {
@@ -223,6 +232,7 @@ pageJson =
     """
 
 
+page : Page
 page =
     { startedDateTime = (Result.withDefault (Date.fromTime 0) (Date.fromString "2009-04-16T12:07:25.123+01:00"))
     , id = "page_0"
@@ -234,6 +244,7 @@ page =
     }
 
 
+logJson : String
 logJson =
     """
 {
@@ -261,86 +272,8 @@ logJson =
     """
 
 
+log : Log
 log =
     { pages = [ page ]
     , entries = [ entry, entry ]
     }
-
-
-
--- Helpers
-
-
-type alias TestDescription outputType =
-    { description : String
-    , output : outputType
-    , expected : outputType
-    }
-
-
-equalityTest : TestDescription out -> Test
-equalityTest { description, output, expected } =
-    test description <|
-        \_ -> Expect.equal expected output
-
-
-equalityTests =
-    List.map equalityTest
-
-
-
--- Tests
-
-
-all : Test
-all =
-    describe "HttpArchive"
-        [ describe "Parsing a Request"
-            (equalityTests
-                [ { description = "decodes a request with no headers"
-                  , output = (parse HttpArchive.request requestJson)
-                  , expected = Ok request
-                  }
-                , { description = "decodes a request with headers"
-                  , output = (parse HttpArchive.request requestWithHeadersJson)
-                  , expected = Ok requestWithHeaders
-                  }
-                ]
-            )
-        , describe "Parsing a Response"
-            (equalityTests
-                [ { description = "decodes a response with no headers"
-                  , output = (parse HttpArchive.response responseJson)
-                  , expected = Ok response
-                  }
-                , { description = "decodes a response with headers"
-                  , output = (parse HttpArchive.response responseWithHeadersJson)
-                  , expected = Ok responseWithHeaders
-                  }
-                ]
-            )
-        , describe "Parsing an Entry"
-            (equalityTests
-                [ { description = "decodes an entry with timings, request and response"
-                  , output = (parse HttpArchive.entry entryJson)
-                  , expected = Ok entry
-                  }
-                ]
-            )
-        , describe "Parsing a Page"
-            (equalityTests
-                [ { description = "decodes a page"
-                  , output = (parse HttpArchive.page pageJson)
-                  , expected = Ok page
-                  }
-                ]
-            )
-        , describe "Parsing a Log"
-            (equalityTests
-                [ { description = "decodes a log with two full entries"
-                  , output = (parse HttpArchive.log logJson)
-                  , expected = Ok log
-                  }
-                ]
-            )
-        ]

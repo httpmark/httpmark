@@ -1,10 +1,10 @@
 module Model exposing (..)
 
-import HttpArchive
+import HttpArchive.Types exposing (Log)
 
 
 type Output
-    = Archive HttpArchive.Log
+    = Archive Log
     | Status String
 
 
@@ -14,7 +14,7 @@ type alias Model =
     }
 
 
-updateFromResponse : Result String HttpArchive.Log -> Model -> Model
+updateFromResponse : Result String Log -> Model -> Model
 updateFromResponse response model =
     case response of
         Err err ->

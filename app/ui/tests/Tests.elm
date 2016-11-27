@@ -1,11 +1,11 @@
 module Tests exposing (..)
 
 import Test exposing (..)
-import HttpArchiveTest
+import HttpArchive.TypesTest
 
 
 all : Test
 all =
     describe "Web App Test UI"
-        [ HttpArchiveTest.all
+        [ HttpArchive.TypesTest.all
         ]
