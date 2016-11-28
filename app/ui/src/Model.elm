@@ -1,14 +1,10 @@
 module Model exposing (..)
 
-import Json.Decode as Decode
-
-
-type alias Messages =
-    List String
+import HttpArchive.Types exposing (Log)
 
 
 type Output
-    = Messages Messages
+    = Archive Log
     | Status String
 
 
@@ -18,10 +14,11 @@ type alias Model =
     }
 
 
-fromJson : String -> Result String Messages
-fromJson message =
-    let
-        messageDecoder =
-            Decode.at [ "messages" ] (Decode.list Decode.string)
-    in
-        Decode.decodeString messageDecoder message
+updateFromResponse : Result String Log -> Model -> Model
+updateFromResponse response model =
+    case response of
+        Err err ->
+            { model | output = Status err }
+
+        Ok log ->
+            { model | output = Archive log }

@@ -3,6 +3,7 @@ module Components exposing (..)
 import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (onClick, onInput, onSubmit)
+import HttpArchive.Views exposing (log)
 import Model exposing (Output(..))
 
 
@@ -26,8 +27,5 @@ output output =
         Status message ->
             p [] [ text message ]
 
-        Messages messages ->
-            div []
-                [ p [] [ text "Server messages:" ]
-                , ul [] (List.map (\l -> li [] [ text l ]) messages)
-                ]
+        Archive l ->
+            log l
