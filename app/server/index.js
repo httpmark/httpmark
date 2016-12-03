@@ -22,7 +22,6 @@ tcpServer.on('connection', conn => {
 
   conn.on('data', d => {
     log('tcp-server', 'connection data from %s: %j', remoteAddress, d);
-
     console.log(d);
     conn.write(d);
   });
