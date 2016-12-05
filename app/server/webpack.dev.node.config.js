@@ -2,7 +2,7 @@ import nodeExternals from 'webpack-node-externals';
 
 export default {
   entry: [
-    `${process.cwd()}/../node_modules/webpack/hot/poll?1000`,
+    `${process.cwd()}/node_modules/webpack/hot/poll?1000`,
     'babel-polyfill',
     './index.js'
   ],
@@ -17,7 +17,10 @@ export default {
       {
         test: /\.js?$/,
         exclude: /node_modules/,
-        loader: 'babel'
+        loader: 'babel',
+        query: {
+          presets: ['es2015']
+        }
       }
     ]
   }
