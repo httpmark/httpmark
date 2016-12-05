@@ -9,7 +9,7 @@ Webpack HMR is provided for both server and the Elm bundle. You need to run each
 make dev-build-ui # Invokes a Webpack Dev Server for Elm HMR.
 
 # Second shell
-make dev-server-build # Injects the Webpack HMR runtime into the server bundle.
+make dev-build-server # Injects the Webpack HMR runtime into the server bundle.
 
 # Third shell
 NODE_ENV=development node server/build/server.js

@@ -7,7 +7,7 @@ import bodyParser from 'body-parser';
 import debug from 'debug';
 import path from 'path';
 
-import MOCK_HAR from '../fixtures/google.har';
+import MOCK_HAR from './fixtures/google.har';
 
 const PORT = 3000;
 
