@@ -4,6 +4,9 @@
   "private": true,
   "description": "The test agent for httpmark",
   "main": "index.js",
+  "engines": {
+    "node": "7.2.0"
+  },
   "scripts": {
     "test:server": "mocha server/**/*.spec.js",
     "test:extension": "mocha chrome-extension/**/*.spec.js --require chrome-extension/test-helper",
