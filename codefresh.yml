@@ -1,7 +1,16 @@
 version: '1.0'
 
 steps:
-  build_agent:
+
+  agent_test:
+    image: node:7.2.0
+    working_directory: ${{main_clone}}/agent
+    commands:
+      - npm i -g yarn
+      - yarn install
+      - yarn test
+
+  agent_build:
     type: build
     image_name: test_agent
     working_directory: ${{main_clone}}/agent
