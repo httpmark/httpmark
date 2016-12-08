@@ -15,3 +15,13 @@ steps:
     image_name: test_agent
     working_directory: ${{main_clone}}/agent
     tag: latest
+    image_name: httpmark-test-agent
+
+  agent_push:
+    type: push
+    candidate: ${{agent_build}}
+    provider: ecr
+    tag: latest
+    accessKeyId: ${{AWS_ACCESS_KEY_ID}}
+    secretAccessKey: ${{AWS_SECRET_ACCESS_KEY}}
+    region: eu-west-1
