@@ -1,20 +1,20 @@
 resource "aws_ecs_cluster" "default" {
-  name = "httpmark-test-agents-${var.environment}"
+  name = "httpmark-test-agents"
 }
 
 resource "aws_iam_role" "ecs_role" {
-  name = "httpmark-test-agents-${var.environment}-ecs"
+  name = "httpmark-test-agents-ecs"
   assume_role_policy = "${file("${path.module}/policies/ecs-instance-role.json")}"
 }
 
 resource "aws_iam_instance_profile" "ecs" {
-  name = "httpmark-test-agent-${var.environment}-ecs-instance-profile"
+  name = "httpmark-test-agent-ecs-instance-profile"
   path = "/"
   roles = ["${aws_iam_role.ecs_role.name}"]
 }
 
 resource "aws_iam_role_policy" "ecs_role_policy" {
-  name = "httpmark-test-agent-${var.environment}-ecs"
+  name = "httpmark-test-agent-ecs"
   role = "${aws_iam_role.ecs_role.id}"
   policy = "${file("${path.module}/policies/ecs-instance-role-policy.json")}"
 }
@@ -30,7 +30,7 @@ resource "aws_instance" "agent" {
   }
   user_data = <<EOT
 #!/bin/bash
-echo ECS_CLUSTER=test-agents-${var.environment} > /etc/ecs/ecs.config
+echo ECS_CLUSTER=test-agents > /etc/ecs/ecs.config
 EOT
 }
 
@@ -45,6 +45,6 @@ resource "template_file" "test_agent_task_definition" {
 }
 
 resource "aws_ecs_task_definition" "default" {
-  family = "httpmark-test-agent-${var.environment}"
+  family = "httpmark-test-agent"
   container_definitions = "${template_file.test_agent_task_definition.rendered}"
 }
