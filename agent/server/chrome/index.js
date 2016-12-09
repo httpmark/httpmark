@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 import { sync as whichSync } from 'which';
 import { spawn } from 'child_process';
 import rimraf from 'rimraf';
