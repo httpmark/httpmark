@@ -28,10 +28,10 @@ You must ensure the following environment variables are set.
 
 ```bash
 # View execution plan
-bin/infrastructure.sh -t plan -e $ENVIRONMENT
+bin/infrastructure.sh -t plan
 
 # Apply execution plan
-bin/infrastructure.sh -t apply -e $ENVIRONMENT # Where $ENVIRONMENT describes the context of the deployment. For example `development`, `production`, etc.
+bin/infrastructure.sh -t apply
 ```
 
 ### Building And Uploading The Docker Image To ECR
