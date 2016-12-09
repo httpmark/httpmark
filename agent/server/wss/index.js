@@ -1,4 +1,3 @@
-import { partial } from 'ramda';
 import { Server } from 'ws';
 
 export const onConnection = (onMessage, ws) => ws.on('message', onMessage);
