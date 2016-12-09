@@ -12,7 +12,6 @@ steps:
 
   agent_build:
     type: build
-    image_name: test_agent
     working_directory: ${{main_clone}}/agent
     tag: latest
     image_name: httpmark-test-agent
@@ -25,3 +24,12 @@ steps:
     accessKeyId: ${{AWS_ACCESS_KEY_ID}}
     secretAccessKey: ${{AWS_SECRET_ACCESS_KEY}}
     region: eu-west-1
+
+  app_test:
+    image: node:7.2.0
+    working_directory: ${{main_clone}}/app
+    commands:
+      - npm i -g yarn
+      - npm i -g elm@0.18.0
+      - cd ui && yarn install
+      - make test
