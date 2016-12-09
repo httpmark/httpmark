@@ -1,6 +1,6 @@
 # Infrastructure
 
-Once code is merged into `master`, Circle CI manages deployment of infrastructure changes as well as building of the Docker image, as necessary.
+Once code is merged into `master`, CodeFresh manages deployment of infrastructure changes as well as building of the Docker image, as necessary.
 
 Therefore, the steps below are only required when you're setting up the project for the first time, or in the case of ECR, manually pushing rebuilt images to the registry.
 
