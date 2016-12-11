@@ -1,4 +1,4 @@
-FROM node:7.2.0-alpine
+FROM node:6.9.2-alpine
 
 RUN apk update && \
     apk add eudev chromium xvfb dbus-x11 dbus openrc
