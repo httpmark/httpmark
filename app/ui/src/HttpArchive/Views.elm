@@ -21,31 +21,16 @@ type CssClases
 css : List Snippet
 css =
     namespace "HttpArchive" <|
-        [ (.) Log
-            [ margin2 zero auto ]
-        , (.) Entries
-            [ border3 (px 1) solid (rgb 200 200 200)
-            , property "border-collapse" "collapse"
-            , fontSize (px 12)
-            , color (rgb 100 100 100)
-            , descendants
-                [ each [ E.td, E.th ]
-                    [ padding (Css.em 0.5)
-                    , border3 (px 1) solid (rgb 200 200 200)
-                      -- collapse is not exposed?
-                    , borderTop zero
-                    , borderBottom zero
-                    ]
-                , E.th
-                    [ borderBottom3 (px 1) solid (rgb 200 200 200) ]
-                ]
-            ]
-        , (.)
-            Entry
-            [ nthChild "odd"
-                [ backgroundColor (rgb 240 240 240)
-                ]
-            ]
+        [ logStyles
+        , entriesStyles
+        , entryStyles
+        ]
+
+
+logStyles : Snippet
+logStyles =
+    (.) Log
+        [ margin2 zero auto
         ]
 
 
@@ -56,14 +41,6 @@ log log =
         page =
             List.head log.pages
 
-        title =
-            case page of
-                Just page ->
-                    Html.text page.title
-
-                Nothing ->
-                    Html.text ""
-
         contentLoad =
             case page of
                 Just page ->
@@ -73,11 +50,30 @@ log log =
                     "?"
     in
         div [ class [ Log ] ]
-            [ h2 [] [ title ]
-            , p []
-                [ Html.text ("content loaded in " ++ contentLoad ++ " ms") ]
-            , entries log.entries
+            [ entries log.entries
             ]
+
+
+entriesStyles : Snippet
+entriesStyles =
+    (.) Entries
+        [ width (pct 100)
+        , border3 (px 1) solid (rgb 200 200 200)
+        , property "border-collapse" "collapse"
+        , fontSize (px 12)
+        , color (rgb 100 100 100)
+        , descendants
+            [ each [ E.td, E.th ]
+                [ padding (Css.em 0.5)
+                , border3 (px 1) solid (rgb 200 200 200)
+                  -- collapse is not exposed?
+                , borderTop zero
+                , borderBottom zero
+                ]
+            , E.th
+                [ borderBottom3 (px 1) solid (rgb 200 200 200) ]
+            ]
+        ]
 
 
 entries : List Entry -> Html msg
@@ -93,6 +89,16 @@ entries entries =
                 ]
             ]
         , tbody [] <| List.map entry entries
+        ]
+
+
+entryStyles : Snippet
+entryStyles =
+    (.)
+        Entry
+        [ nthChild "odd"
+            [ backgroundColor (rgb 240 240 240)
+            ]
         ]
 
 
