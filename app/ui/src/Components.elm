@@ -10,14 +10,19 @@ import HttpArchive.Views exposing (log)
 import Model exposing (Output(..))
 
 
-css : Css.Stylesheet
-css =
-    (stylesheet << namespace "httpmark")
+globalStyles : List Snippet
+globalStyles =
+    namespace "httpmark"
         [ E.body
             [ backgroundColor (Css.rgb 250 250 250)
             , fontFamilies [ "Helvetica", "sans-serif" ]
             ]
         ]
+
+
+css : List Snippet
+css =
+    globalStyles ++ HttpArchive.Views.css
 
 
 layout : List (Html msg) -> Html msg
