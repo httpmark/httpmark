@@ -34,5 +34,12 @@ test-ui: $(UI_DEPS)
 test: test-ui
 
 .PHONY: \
+	build-ui \
+	build-server \
+	dev-build-ui \
+	dev-build-server \
+	check-elm-install \
+	check-yarn-install \
 	run \
 	test \
+	test-ui \
