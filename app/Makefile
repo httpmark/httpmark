@@ -1,4 +1,6 @@
 SHELL:=/bin/bash
+UI_DEPS=./ui/elm-stuff ./ui/node_modules
+SERVER_DEPS=./server/node_modules
 
 # Check for global dependencies and install them if necessary
 
@@ -10,26 +12,22 @@ check-yarn-install:
 
 # UI setup
 
-UI_DEPS=./ui/elm-stuff ./ui/node_modules
-
 ./ui/node_modules: check-yarn-install
 	cd ./ui && yarn
 
 ./ui/elm-stuff: check-elm-install
 	cd ./ui && elm-package install
 
-build-ui:
+build-ui: $(UI_DEPS)
 	cd ./ui && yarn run build
 
-dev-build-ui:
+dev-build-ui: $(UI_DEPS)
 	cd ./ui && yarn run build:dev
 
 test-ui: $(UI_DEPS)
 	cd ./ui && yarn test
 
 # Server setup
-
-SERVER_DEPS=./server/node_modules
 
 ./server/node_modules: check-yarn-install
 	cd ./server && yarn
