@@ -35,7 +35,4 @@ steps:
     image: node:6.9.2
     working_directory: ${{main_clone}}/app
     commands:
-      - npm i -g yarn
-      - npm i -g elm@0.18.0
-      - cd ui && yarn install
       - make test
