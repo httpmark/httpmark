@@ -1,6 +1,6 @@
-var config = require('./webpack.config.base');
+let config = require('./webpack.config.base');
 
-var ExtractTextPlugin = require("extract-text-webpack-plugin");
+const ExtractTextPlugin = require("extract-text-webpack-plugin");
 
 config.plugins = [
     new ExtractTextPlugin("styles.css")

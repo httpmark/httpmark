@@ -1,6 +1,6 @@
-var config = require('./webpack.config.base');
+let config = require('./webpack.config.base');
 
-var HotModuleReplacementPlugin = require("webpack").HotModuleReplacementPlugin;
+const HotModuleReplacementPlugin = require("webpack").HotModuleReplacementPlugin;
 
 config.entry.push('webpack/hot/dev-server');
 config.output.publicPath = "http://localhost:8080/";
