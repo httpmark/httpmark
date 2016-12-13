@@ -16,7 +16,7 @@ check-yarn-install:
 	cd ./ui && yarn
 
 ./ui/elm-stuff: check-elm-install
-	cd ./ui && elm-package install
+	cd ./ui && elm-package install -y
 
 build-ui: $(UI_DEPS)
 	cd ./ui && yarn run build

@@ -4,6 +4,9 @@
   "private": true,
   "description": "Chrome extension responsible for managing the in-browser test orchestration and forwarding the subsequent metrics",
   "main": "",
+  "engines": {
+    "node": "6.9.2"
+  },
   "scripts": {
     "compile-scripts": "babel-node ../node_modules/.bin/webpack",
     "build": "npm run compile-scripts && cp ./src/devtools.html ./build && cp ./src/manifest.json ./build"

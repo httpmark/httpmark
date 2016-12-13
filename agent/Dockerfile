@@ -1,7 +1,7 @@
-FROM alpine:3.4
+FROM node:6.9.2-alpine
 
 RUN apk update && \
-    apk add eudev nodejs chromium xvfb python make gcc g++ dbus-x11 dbus openrc
+    apk add eudev chromium xvfb dbus-x11 dbus openrc
 
 RUN npm i -g yarn
 

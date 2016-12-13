@@ -5,7 +5,7 @@
   "description": "httpmark: server / api",
   "main": "index.js",
   "engines": {
-    "node": "6.2.1"
+    "node": "6.9.2"
   },
   "scripts": {
     "lint": "eslint . --cache",

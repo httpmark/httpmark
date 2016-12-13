@@ -1,0 +1,38 @@
+version: '1.0'
+
+steps:
+
+  agent_test:
+    image: node:6.9.2
+    working_directory: ${{main_clone}}/agent
+    commands:
+      - npm i -g yarn
+      - yarn install
+      - yarn test
+
+  agent_build:
+    type: build
+    working_directory: ${{main_clone}}/agent
+    tag: latest
+    image_name: httpmark-test-agent
+    when:
+      branch:
+        only: [ master ]
+
+  agent_push:
+    type: push
+    candidate: ${{agent_build}}
+    provider: ecr
+    tag: latest
+    accessKeyId: ${{AWS_ACCESS_KEY_ID}}
+    secretAccessKey: ${{AWS_SECRET_ACCESS_KEY}}
+    region: eu-west-1
+    when:
+      branch:
+        only: [ master ]
+
+  app_test:
+    image: node:6.9.2
+    working_directory: ${{main_clone}}/app
+    commands:
+      - make test

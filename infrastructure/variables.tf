@@ -1,3 +1,3 @@
-variable "aws_access_key" {}
 variable "aws_secret_key" {}
-variable "environment" {}
+variable "aws_access_key" {}
+variable "public_key_path" {}
