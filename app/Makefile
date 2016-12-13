@@ -27,14 +27,21 @@ dev-build-ui:
 test-ui: $(UI_DEPS)
 	cd ./ui && yarn test
 
-run: build-ui build-server
-	node server/build/server.js
+# Server setup
 
-build-server:
+SERVER_DEPS=./server/node_modules
+
+./server/node_modules: check-yarn-install
+	cd ./server && yarn
+
+build-server: $(SERVER_DEPS)
 	cd ./server && yarn run build
 
-dev-build-server:
+dev-build-server: $(SERVER_DEPS)
 	cd ./server && yarn run build:dev
+
+run: build-ui build-server
+	node server/build/server.js
 
 test: test-ui
 
