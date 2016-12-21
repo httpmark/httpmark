@@ -1,37 +1,15 @@
-import CleanWebpackPlugin from 'clean-webpack-plugin';
+let config = require('./webpack.config.base');
 
-export default {
-  entry: './src/index.js',
-  output: {
-    path: './build',
-    filename: 'index.js',
-    publicPath: 'http://localhost:8080/'
-  },
-  resolve: {
-    modulesDirectories: ['node_modules'],
-    extensions: ['', '.js', '.elm']
-  },
-  module: {
-    loaders: [
-      {
-        test: /\.js?$/,
-        exclude: /node_modules/,
-        loader: 'babel',
-        query: {
-          presets: ['es2015']
-        }
-      },
-      {
-        test: /\.html$/,
-        exclude: /node_modules/,
-        loader: 'file?name=[name].[ext]'
-      },
-      {
-        test: /\.elm$/,
-        exclude: [/elm-stuff/, /node_modules/],
-        loader: 'elm-hot!elm-webpack'
-      }
-    ],
-    noParse: /\.elm$/
-  }
-};
+const ExtractTextPlugin = require("extract-text-webpack-plugin");
+
+config.plugins = [
+    new ExtractTextPlugin("styles.css")
+];
+
+config.module.loaders.push({
+  test: /src\/Stylesheets\.elm$/,
+  exclude: [/elm-stuff/, /node_modules/],
+  loader: ExtractTextPlugin.extract('css!elm-css-webpack')
+});
+
+module.exports = config;

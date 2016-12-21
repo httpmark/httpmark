@@ -20,7 +20,7 @@ main =
 
 init : ( Model, Cmd a )
 init =
-    ( Model "" (Status "Ready."), Cmd.none )
+    ( Model "" (Status ""), Cmd.none )
 
 
 update : Message -> Model -> ( Model, Cmd Message )
@@ -30,7 +30,7 @@ update msg model =
             ( { model | query = text }, Cmd.none )
 
         Fetch ->
-            ( { model | output = Model.Status "Awaiting response..." }, API.send model.query )
+            ( { model | output = Model.Status "Loading..." }, API.send model.query )
 
         Receive json ->
             ( Model.updateFromResponse (fromJson json) model, Cmd.none )

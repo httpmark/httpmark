@@ -8,8 +8,8 @@
   },
   "description": "",
   "scripts": {
-    "build:dev": "babel-node --presets es2015 $(npm bin)/webpack-dev-server --hot --inline",
-    "build": "babel-node --presets es2015 $(npm bin)/webpack",
+    "build:dev": "$(npm bin)/webpack-dev-server --config webpack.config.hot.js",
+    "build": "$(npm bin)/webpack",
     "test": "elm-test"
   },
   "devDependencies": {
@@ -18,9 +18,12 @@
     "babel-preset-es2015": "^6.18.0",
     "clean-webpack-plugin": "^0.1.13",
     "copy-webpack-plugin": "^3.0.1",
+    "css-loader": "^0.26.1",
+    "elm-css-webpack-loader": "^2.0.2",
     "elm-hot-loader": "^0.3.4",
     "elm-test": "^0.18.0",
     "elm-webpack-loader": "^3.0.6",
+    "extract-text-webpack-plugin": "^1.0.1",
     "file-loader": "^0.9.0",
     "style-loader": "^0.13.1",
     "webpack": "^1.13.3",
