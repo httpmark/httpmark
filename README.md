@@ -18,11 +18,7 @@ The entire infrastructure for the private instance is immutable and described th
 
 ## Where To Start
 
-There are a few areas you should check out, if you're visiting for the first time:
-
-* Gain an insight into the project history, by checking out [how the project came about](https://github.com/jameshopkins/httpmark/wiki/How-Did-This-Project-Come-About%3F)
-* Check out a [view of the high-level architecture](https://github.com/jameshopkins/httpmark/wiki/High-Level-Architecture) to understand what makes test execution so quick.
-* If you'd like to contribute to the project, you can check out the [guidelines](CONTRIBUTING.md).
+Check out the [docs](docs/).
 
 ## Current Status
 
