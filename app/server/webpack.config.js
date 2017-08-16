@@ -1,6 +1,6 @@
-import nodeExternals from 'webpack-node-externals';
+const nodeExternals = require('webpack-node-externals');
 
-export default {
+module.exports = {
   entry: [
     'babel-polyfill',
     './index.js'

@@ -1,8 +1,8 @@
-import nodeExternals from 'webpack-node-externals';
-import path from 'path';
-import webpack from 'webpack';
+const nodeExternals = require('webpack-node-externals');
+const path = require('path');
+const webpack = require('webpack');
 
-export default {
+module.exports = {
   entry: './server/index.js',
   module: {
     loaders: [{
