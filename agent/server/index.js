@@ -4,7 +4,6 @@ import express from 'express';
 import net from 'net';
 import bodyParser from 'body-parser';
 import { Server as WebSocketServer } from 'ws';
-import runChrome from './chrome';
 
 const wss = new WebSocketServer({ port: 3001 });
 
@@ -14,7 +13,7 @@ const client = net.connect({
 });
 
 client.on('connect', () => {
-  runChrome()
+  client.write('Wahey it is connected!');
   console.log('agent is connected')
 });
 

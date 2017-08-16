@@ -9,12 +9,10 @@
   },
   "scripts": {
     "test:server": "mocha server/**/*.spec.js",
-    "test:extension": "mocha chrome-extension/**/*.spec.js --require chrome-extension/test-helper",
     "pretest": "npm run lint",
-    "test": "npm run test:server && npm run test:extension",
+    "test": "npm run test:server",
     "compile-scripts": "webpack",
-    "build": "npm run compile-scripts && cd chrome-extension && npm run build",
-    "postbuild": "cp -r ./chrome-extension/build ./build/chrome-extension",
+    "build": "npm run compile-scripts",
     "lint": "eslint --cache ."
   },
   "author": "",
@@ -25,8 +23,7 @@
     "express": "^4.14.0",
     "rimraf": "^2.5.4",
     "which": "^1.2.11",
-    "ws": "^1.1.1",
-    "xvfb": "^0.2.3"
+    "ws": "^1.1.1"
   },
   "devDependencies": {
     "babel-core": "^6.18.0",
